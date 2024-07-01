@@ -4,6 +4,8 @@
 import express from 'express';
 import cors from 'cors';
 import cron from 'node-cron';
+
+//Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
 import {getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserID, getClassRatings} from './sqlquery.js'
 import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser } from './sqladd.js';
