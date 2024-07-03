@@ -37,7 +37,8 @@ export async function getClassInfo(poolConnection, classID, uniID) {
         LEFT JOIN Comments c ON d.DifficultyID = c.DifficultyID
         LEFT JOIN fullclassname cl ON d.ClassID = cl.ClassID
         WHERE d.ClassID = ${classID} AND cl.UniID = '${uniID}'
-        `);
+        ORDER BY c.PostDate DESC
+        `); // Comments are ordered by most recent, descending
         return resultSet.recordset;
     } catch (err) {
         console.error(err.message);
@@ -68,6 +69,7 @@ export async function getClassRatings(poolConnection, classID, uniID) {
         LEFT JOIN Comments c ON d.DifficultyID = c.DifficultyID
         LEFT JOIN fullclassname cl ON d.ClassID = cl.ClassID
         WHERE d.ClassID = ${classID} AND cl.UniID = '${uniID}'
+        ORDER BY c.PostDate DESC
         `);
         return resultSet.recordset;
     } catch (err) {
