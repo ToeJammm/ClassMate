@@ -42,12 +42,12 @@ useEffect(() => {
       console.log("is admin: ", isAdmin(response.data[0].UserID))
       localStorage.setItem("userID", response.data[0].UserID);
       if(isAdmin(response.data[0].UserID)) {
-        console.log("welcom Admin, setting admin status to 1");
+        console.log("welcome Admin, setting admin status to 1");
         localStorage.setItem("admin", 1);
       }
   
     } catch (error) {
-      console.log("an error occured")
+      console.log("an error occurred")
       setError(error.message);
     }
   };

@@ -70,13 +70,16 @@ const NavBar = () => {
           {loggedIn ? (
             <>
             {localStorage.getItem("admin") === "1" ? 
-            <NavLink to="/admin">
+            <NavLink to="/Admin">
               <button className="navBar-logout-text" >
                 Admin Portal
               </button>
             </NavLink>
-
-                 : ''
+              : <NavLink to="/Request">
+              <button className="navBar-logout-text" >
+                Request Addition
+              </button>
+            </NavLink>
               }
               <button className="navBar-logout-text" onClick={logout}>
                 Log Out
