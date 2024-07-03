@@ -84,7 +84,17 @@ useEffect(() => {
 
 
   function isAdmin(userId) {
-    return adminIDs.includes(String(userId));
+    // Ensure userId is a string for comparison
+    userId = userId;
+
+    // Loop through adminIDs array
+    for (let i = 0; i < adminIDs.length; i++) {
+      console.log("comparing: ", userId, "and", adminIDs[i]);
+      if (userId === adminIDs[i]) {
+        return true;
+      }
+    }
+    return false;
   }
 
 
