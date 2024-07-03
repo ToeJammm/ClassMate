@@ -46,6 +46,7 @@ export async function getClassInfo(poolConnection, classID, uniID) {
     }
 }
 
+// Gets all the information about the ratings for aggregate data
 export async function getClassRatings(poolConnection, classID, uniID) {
     try {
         console.log("requesting class info for classID " + classID + " at university " + uniID);
@@ -78,7 +79,7 @@ export async function getClassRatings(poolConnection, classID, uniID) {
     }
 }
 
-
+// Name says it all
 export async function getAllClassesByUni(poolConnection, uniID) {
     try {
         console.log("requesting all classes at university " + uniID);
@@ -95,6 +96,8 @@ export async function getAllClassesByUni(poolConnection, uniID) {
     }
 }
 
+
+// Name also says it all
 export async function getClassesByUniAndType(poolConnection, uniID, classTypeID) {
     try {
         console.log("requesting class info for classTypeID " + classTypeID + " at university " + uniID);
@@ -112,7 +115,7 @@ export async function getClassesByUniAndType(poolConnection, uniID, classTypeID)
     }
 }
 
-
+// Find all professors, given a university
 export async function getProfessorsAtUni(poolConnection, uniID) {
     try {
         console.log("requesting all professors at university " + uniID);
@@ -128,6 +131,8 @@ export async function getProfessorsAtUni(poolConnection, uniID) {
     }
 }
 
+
+// Find all classes that a professor teaches
 export async function getProfessorsByClassID(poolConnection, classID) {
     try {
         console.log("requesting all professors with classID " + classID);
@@ -169,6 +174,7 @@ export async function getPostersByClassID(poolConnection, classID) {
     }
 }
 
+// Get user id by email
 export async function getUserID(poolConnection, email) {
     try {
         console.log("requesting userID for email " + email);
