@@ -22,7 +22,7 @@ export default function SignUpBox2() {
   const addUser = async (email, uniID) => {
     try {
       console.log("add user called");
-      const response = await axios.post('${apiUrl}/adduser', { email, uniID });
+      const response = await axios.post(`${apiUrl}/adduser`, { email, uniID });
       console.log("added user " +  email  + " to the database");
       return response.data;
     } catch (error) {

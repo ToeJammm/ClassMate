@@ -10,14 +10,25 @@ import { LoginContext } from "../../App";
 import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
+
+const adminIDs = JSON.parse(import.meta.env.VITE_ADMIN_IDS);
+
+
+
+
 const apiUrl = __API_BASE_URL__;
 
 export default function LoginBox() {
+useEffect(() => {
+  console.log("adminIds: ", adminIDs);
+}, [])
+
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const[loggedIn, setLoggedIn] = useContext(LoginContext);
   const [error, setError] = useState(null); // State variable for error message
+  const [admin, setAdmin] = useState(0);
   // const[userID, setUserID] = useState("");
   const navigate = useNavigate();
 
@@ -26,11 +37,17 @@ export default function LoginBox() {
   const fetchUserID = async (email) => {
     try {
       const response = await axios.get(`${apiUrl}/${email}/userID`);
-      console.log(response.data[0].UserID);
+      console.log("user's ID: ", response.data[0].UserID);
       // setUserID(response.data[0].UserID); // Assuming response contains the user ID
+      console.log("is admin: ", isAdmin(response.data[0].UserID))
       localStorage.setItem("userID", response.data[0].UserID);
+      if(isAdmin(response.data[0].UserID)) {
+        console.log("welcom Admin, setting admin status to 1");
+        localStorage.setItem("admin", 1);
+      }
   
     } catch (error) {
+      console.log("an error occured")
       setError(error.message);
     }
   };
@@ -64,6 +81,11 @@ export default function LoginBox() {
       
     return () => unsubscribe();
   }, [loggedIn, setLoggedIn]);
+
+
+  function isAdmin(userId) {
+    return adminIDs.includes(String(userId));
+  }
 
 
 const Login = async () => {

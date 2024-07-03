@@ -16,7 +16,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login"
 import UniversityPage from "./pages/UniversityPage";
 import ClassPage from "./pages/classPage";
-
+import AdminPage from "./pages/AdminPage";
 
 
 export const LoginContext = createContext();
@@ -27,6 +27,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/Admin" element={<AdminPage />} />
       <Route path="/University">
         <Route path=":uniID" element={<UniversityPage />}> 
         </Route>

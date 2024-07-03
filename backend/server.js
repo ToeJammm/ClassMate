@@ -95,7 +95,7 @@ app.get('/uni/:uniID/classtype/:classTypeID/classes', async (req, res) => {
     res.json(record);
 });
 
-app.get('/email/:email/userID', async (req, res) => {
+app.get('/:email/userID', async (req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
     let record = await getUserID(poolConnection, req.params.email);
