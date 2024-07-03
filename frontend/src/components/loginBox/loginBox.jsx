@@ -44,6 +44,8 @@ useEffect(() => {
       if(isAdmin(response.data[0].UserID)) {
         console.log("welcom Admin, setting admin status to 1");
         localStorage.setItem("admin", 1);
+      } else {
+        localStorage.setItem("admin", 0);
       }
   
     } catch (error) {
@@ -84,9 +86,18 @@ useEffect(() => {
 
 
   function isAdmin(userId) {
-    return adminIDs.includes(String(userId));
+    // Ensure userId is a string for comparison
+    userId = userId;
+  
+    // Loop through adminIDs array
+    for (let i = 0; i < adminIDs.length; i++) {
+      console.log("comparing: ", userId, "and", adminIDs[i]);
+      if (userId === adminIDs[i]) {
+        return true;
+      }
+    }
+    return false;
   }
-
 
 const Login = async () => {
   try {
@@ -95,7 +106,6 @@ const Login = async () => {
         loginEmail,
         loginPassword,
     );
-    console.log(user);
     
     
 
