@@ -32,14 +32,17 @@ export default function SignUpBox2() {
         console.log(error.response.data);
         console.log(error.response.status);
         console.log(error.response.headers);
+        alert("Database error: please try signing up later");
       } else if (error.request) {
         // The request was made but no response was received
         // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
         // http.ClientRequest in node.js
         console.log(error.request);
+        alert("Database error: please try signing up later");
       } else {
         // Something happened in setting up the request that triggered an Error
         console.log('Error', error.message);
+        alert("Database error: please try signing up later");
       }
       console.log(error.config);
       throw error; // Rethrow the error to be handled by the caller if needed
@@ -111,13 +114,9 @@ const signUp = async () => {
       await signInWithEmailAndPassword(auth, signUpEmail, signUpPassword);
 
       setUser(newUser); // Update user state with the new user
-      console.log(user);
       navigate("/");
 
     } catch (error) {
-      alert("Database error: please try signing up later");
-        console.log("failed adding user to azure")
-        console.log(error.message);
         setError(error.message);
     }
 }

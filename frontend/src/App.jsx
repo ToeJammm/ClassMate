@@ -16,6 +16,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login"
 import UniversityPage from "./pages/UniversityPage";
 import ClassPage from "./pages/classPage";
+import AdminPortal from "./pages/adminPortal";
 
 
 
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/Login" element={<Login />} />
       <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/admin" element={<AdminPortal />} />
       <Route path="/University">
         <Route path=":uniID" element={<UniversityPage />}> 
         </Route>
