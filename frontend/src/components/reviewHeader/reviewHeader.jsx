@@ -3,13 +3,15 @@ import "./reviewHeader.css";
 import { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'recharts';
 
+const apiUrl = __API_BASE_URL__;
+
 export default function ReviewHeader( {uniID, classID, className}) {
     const [qualities, setQualities] = useState([]);
     const [difficulty, setDifficulty] = useState([]);
 
 
 function fetchData() {
-    axios.get(`https://classmate-backend-h16a.onrender.com/uni/${uniID}/class/${classID}/ratings`)
+    axios.get(`${apiUrl}/uni/${uniID}/class/${classID}/ratings`)
     .then(response => {
         const ratings = response.data;
         const mappedQualities = ratings.map(rating => rating.QualityValue);

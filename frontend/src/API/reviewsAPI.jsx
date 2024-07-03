@@ -2,10 +2,12 @@
 
 import axios from 'axios';
 
+const apiUrl = __API_BASE_URL__;
+
 export const FetchReviews = async (uni, classID) => {
   try {
     if (uni && classID) { 
-      const response = await axios.get(`https://classmate-backend-h16a.onrender.com/uni/${uni}/class/${classID}`);
+      const response = await axios.get(`${apiUrl}/uni/${uni}/class/${classID}`);
       console.log("fetching reviews");
       return response.data; // Return the fetched reviews
     }

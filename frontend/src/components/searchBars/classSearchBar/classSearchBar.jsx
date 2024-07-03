@@ -2,14 +2,14 @@
 import {React, useEffect, useState } from 'react';
 import "./classSearchBar.css"
 
+const apiUrl = __API_BASE_URL__;
+
 export const ClassSearchBar = ({ setResults, uniID }) => {
     const [input, setInput] = useState("");
 
     
-
-    
     const fetchData = async (value) => {
-            const response = await fetch(`https://classmate-backend-h16a.onrender.com/uni/${uniID}/allclasses`);
+            const response = await fetch(`${apiUrl}/uni/${uniID}/allclasses`);
             const json = await response.json();
             const result = json.filter((course) => {
                 return course && value &&

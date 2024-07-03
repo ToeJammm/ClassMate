@@ -2,12 +2,14 @@
 import {React, useState } from 'react';
 import "./universitySearchBar.css"
 
+const apiUrl = __API_BASE_URL__;
+
 export const SearchBar = ({ setResults }) => {
     const [input, setInput] = useState("");
 
     
     const fetchData = async (value) => {
-            const response = await fetch("https://classmate-backend-h16a.onrender.com/universities");
+            const response = await fetch(`${apiUrl}/universities`);
             const json = await response.json();
             const result = json.filter((uni) => {
                 return uni && value &&

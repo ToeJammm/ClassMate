@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 
  // eslint-disable-next-line no-unused-vars
+ const apiUrl = __API_BASE_URL__;
 
 export default function SignUpBox2() {
 
@@ -21,7 +22,7 @@ export default function SignUpBox2() {
   const addUser = async (email, uniID) => {
     try {
       console.log("add user called");
-      const response = await axios.post('https://classmate-backend-h16a.onrender.com/adduser', { email, uniID });
+      const response = await axios.post('${apiUrl}/adduser', { email, uniID });
       console.log("added user " +  email  + " to the database");
       return response.data;
     } catch (error) {
@@ -49,7 +50,7 @@ export default function SignUpBox2() {
 
   const fetchUserID = async (email) => {
     try {
-      const response = await axios.get(`https://classmate-backend-h16a.onrender.com/email/${email}/userID`);
+      const response = await axios.get(`${apiUrl}/email/${email}/userID`);
       console.log(response.data[0].UserID);
       localStorage.setItem("userID", response.data[0].UserID);
       localStorage.setItem("userEmail", email);
