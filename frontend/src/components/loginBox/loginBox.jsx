@@ -42,14 +42,14 @@ useEffect(() => {
       console.log("is admin: ", isAdmin(response.data[0].UserID))
       localStorage.setItem("userID", response.data[0].UserID);
       if(isAdmin(response.data[0].UserID)) {
-        console.log("welcom Admin, setting admin status to 1");
+        console.log("welcome Admin, setting admin status to 1");
         localStorage.setItem("admin", 1);
       } else {
         localStorage.setItem("admin", 0);
       }
   
     } catch (error) {
-      console.log("an error occured")
+      console.log("an error occurred")
       setError(error.message);
     }
   };
@@ -88,6 +88,17 @@ useEffect(() => {
   function isAdmin(userId) {
     // Ensure userId is a string for comparison
     userId = userId;
+
+    // Loop through adminIDs array
+    for (let i = 0; i < adminIDs.length; i++) {
+      console.log("comparing: ", userId, "and", adminIDs[i]);
+      if (userId === adminIDs[i]) {
+        return true;
+      }
+    }
+    return false;
+    // Ensure userId is a string for comparison
+    userId = userId;
   
     // Loop through adminIDs array
     for (let i = 0; i < adminIDs.length; i++) {
@@ -98,6 +109,7 @@ useEffect(() => {
     }
     return false;
   }
+
 
 const Login = async () => {
   try {
