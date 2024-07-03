@@ -34,7 +34,9 @@ const NavBar = () => {
     console.log("removed userID from local storage");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
+    localStorage.setItem("admin", 0);
     console.log("removed userEmail from local storage");
+    console.log("reset admin to 0");
     console.log("changed logged in to " + localStorage.getItem("loggedIn"));
     navigate("/"); //keeps users from making a post after logging out
   };
