@@ -8,7 +8,7 @@ import cron from 'node-cron';
 //Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
 import {getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserID, getClassRatings} from './sqlquery.js'
-import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser } from './sqladd.js';
+import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser, addRequest } from './sqladd.js';
 import { deleteUniversity, deleteClassType, deleteComment, deleteClass, deleteDifficulty, deleteProfessor, deleteUser } from './sqldelete.js';
 
 const app = express();
@@ -191,7 +191,6 @@ app.delete('/deleteuser', async (req, res) => {
 });
 
 
-
 app.listen(port, () => {
     console.log('Server is running on port ' + port);
 });
@@ -200,3 +199,26 @@ app.listen(port, () => {
 app.get('/activity', async (req, res) => {
     res.json({'Time inactive (minutes)': ((Date.now() - lastActivity) / 1000 / 60).toFixed(3)});
 });
+
+app.post('/addrequest', async(req, res) => {
+    await reopenConnection(poolConnection);
+    lastActivity = Date.now();
+    let record = await addRequest(
+        poolConnection,
+        req.body.uniID,
+        req.body.classID,
+        req.body.userID,
+        req.body.requestID,
+        req.body.professorID,
+        req.body.universityName,
+        req.body.professorName,
+        req.body.className,
+        req.body.classNum,
+        req.body.classTypeID,
+        req.body.comment,
+        req.body.termTaken,
+        req.body.grade,
+        req.body.difficultyValue,
+        req.body.qualityValue);
+    res.json(record);
+})

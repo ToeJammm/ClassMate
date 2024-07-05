@@ -290,3 +290,92 @@ export async function addUpvote(poolConnection, userID, commentID) {
         return null;
     }
 }
+
+export async function addRequest(
+    poolConnection,
+    uniID,
+    classID,
+    userID,
+    requestID,
+    professorID,
+    universityName,
+    professorName,
+    className,
+    classNum,
+    classTypeID,
+    comment,
+    termTaken,
+    grade,
+    difficultyValue,
+    qualityValue
+) {
+    try {
+        let resultSet = await poolConnection.request()
+            .input('uniID', sql.Int, uniID)
+            .input('classID', sql.Int, classID)
+            .input('userID', sql.Int, userID)
+            .input('requestID', sql.Int, requestID)
+            .input('professorID', sql.Int, professorID)
+            .input('universityName', sql.VarChar(255), universityName)
+            .input('professorName', sql.VarChar(255), professorName)
+            .input('className', sql.VarChar(255), className)
+            .input('classNum', sql.VarChar(50), classNum)
+            .input('classTypeID', sql.Int, classTypeID)
+            .input('comment', sql.Text, comment)
+            .input('termTaken', sql.VarChar(50), termTaken)
+            .input('grade', sql.VarChar(5), grade)
+            .input('difficultyValue', sql.Decimal(3, 2), difficultyValue)
+            .input('qualityValue', sql.Decimal(3, 2), qualityValue)
+            .query(`
+                -- Begin a transaction to ensure atomicity
+                BEGIN TRANSACTION;
+
+                -- Insert a new row into the UniversityFeedback table
+                INSERT INTO [dbo].[UniversityFeedback] (
+                    uniID,
+                    classID,
+                    userID,
+                    requestID,
+                    professorID,
+                    universityName,
+                    professorName,
+                    className,
+                    classNum,
+                    classTypeID,
+                    comment,
+                    termTaken,
+                    grade,
+                    difficultyValue,
+                    qualityValue
+                ) VALUES (
+                    @uniID,
+                    @classID,
+                    @userID,
+                    @requestID,
+                    @professorID,
+                    @universityName,
+                    @professorName,
+                    @className,
+                    @classNum,
+                    @classTypeID,
+                    @comment,
+                    @termTaken,
+                    @grade,
+                    @difficultyValue,
+                    @qualityValue
+                );
+
+                -- Commit the transaction
+                COMMIT;
+
+                -- Select the details of the newly added feedback
+                SELECT * FROM [dbo].[UniversityFeedback] 
+                WHERE userID = @userID AND comment = @comment;
+            `);
+
+        return resultSet.recordset;
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}
