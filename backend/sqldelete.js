@@ -1,6 +1,8 @@
 // Contains all of the functions for deleting data from the database
 // Each function takes a poolConnection and the relevant ID as arguments and returns the number of rows affected
 
+import { pool } from "mssql";
+
 
 export async function deleteUser(poolConnection, userID) {
     try {
@@ -169,3 +171,21 @@ export async function deleteDifficulty(poolConnection, difficultyID) {
     }
 }
 
+
+export async function deleteRequest(poolConnection, requestID) {
+    try {
+        console.log("deleting request " + requestID + " from database");
+        let resultSet = await  poolConnection.request().query(`
+        BEGIN TRANSACTION;
+        
+        DELETE FROM [dbo].[requests] WHERE requestID = ${requestID};
+        
+        COMMIT;
+        `);
+        console.log("Number of rows affected: " + resultSet.rowsAffected.reduce((a, b) => a + b, 0));
+        return resultSet.rowsAffected.reduce((a, b) => a + b, 0);
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}
