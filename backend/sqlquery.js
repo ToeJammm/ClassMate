@@ -190,3 +190,17 @@ export async function getUserID(poolConnection, email) {
         return null;
     }
 }
+
+export async function getUserRequests(poolConnection) {
+    try {
+        console.log("Requesting all user requests");
+        let resultSet = await poolConnection.request().query(`
+        SELECT *
+        FROM [dbo].[requests]
+        `);
+        return resultSet.recordset;
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}

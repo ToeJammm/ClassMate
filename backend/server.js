@@ -7,7 +7,7 @@ import cron from 'node-cron';
 
 //Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
-import {getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserID, getClassRatings} from './sqlquery.js'
+import {getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserID, getClassRatings} from './sqlquery.js'
 import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser, addRequest } from './sqladd.js';
 import { deleteUniversity, deleteClassType, deleteComment, deleteClass, deleteDifficulty, deleteProfessor, deleteUser } from './sqldelete.js';
 
@@ -208,7 +208,6 @@ app.post('/addrequest', async(req, res) => {
         req.body.uniID,
         req.body.classID,
         req.body.userID,
-        req.body.requestID,
         req.body.professorID,
         req.body.universityName,
         req.body.professorName,
@@ -220,5 +219,28 @@ app.post('/addrequest', async(req, res) => {
         req.body.grade,
         req.body.difficultyValue,
         req.body.qualityValue);
+    res.json(record);
+})
+
+app.get('/requests', async(req, res) => {
+    await reopenConnection(poolConnection);
+    lastActivity = Date.now();
+    let record = await getUserRequests(
+        poolConnection,
+        req.body.uniID,
+        req.body.classID,
+        req.body.userID,
+        req.body.professorID,
+        req.body.universityName,
+        req.body.professorName,
+        req.body.className,
+        req.body.classNum,
+        req.body.classTypeID,
+        req.body.comment,
+        req.body.termTaken,
+        req.body.grade,
+        req.body.difficultyValue,
+        req.body.qualityValue
+    );
     res.json(record);
 })

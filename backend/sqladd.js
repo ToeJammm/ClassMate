@@ -296,7 +296,6 @@ export async function addRequest(
     uniID,
     classID,
     userID,
-    requestID,
     professorID,
     universityName,
     professorName,
@@ -314,7 +313,6 @@ export async function addRequest(
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)
             .input('userID', sql.Int, userID)
-            .input('requestID', sql.Int, requestID)
             .input('professorID', sql.Int, professorID)
             .input('universityName', sql.VarChar(255), universityName)
             .input('professorName', sql.VarChar(255), professorName)
