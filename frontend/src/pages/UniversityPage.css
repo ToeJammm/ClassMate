@@ -4,6 +4,7 @@
     margin: 0;
     justify-content: center;
     text-align: center;
+    padding-top: 20px;
 }
 
 .container{
@@ -18,12 +19,10 @@
 .back{
     width: 100%;
     padding-left: 40px;
-    padding-top: 10px;
 }
 
 .backArrow{
     cursor: pointer;
-    height: 80px;
 }
 
 @media only screen and (max-width: 767px){

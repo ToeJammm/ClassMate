@@ -175,11 +175,11 @@ export async function getPostersByClassID(poolConnection, classID) {
 }
 
 // Get user id by email
-export async function getUserID(poolConnection, email) {
+export async function getUserInfo(poolConnection, email) {
     try {
         console.log("requesting userID for email " + email);
         let resultSet = await poolConnection.request().query(`
-        SELECT UserID, Email
+        SELECT UserID, Email, userName
         FROM [dbo].[Users]
         WHERE Email = '${email}'
         `);

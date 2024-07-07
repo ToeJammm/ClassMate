@@ -3,12 +3,13 @@
 
 import sql from 'mssql'; //needed for parametrization
 
-export async function addUser(poolConnection, email, uniID) { //hard code uniID to 1
+export async function addUser(poolConnection, email, uniID, userName) { //hard code uniID to 1
     try {
-        console.log("Adding user " + email + " at Uni " + uniID + " to database");
+        console.log("Adding user " + email + " at Uni " + uniID + " to database with a userName " + userName);
         let resultSet = await poolConnection.request()
         .input('email', sql.VarChar, email)
         .input('uniID', sql.Int, uniID)
+        .input('userName', sql.VarChar, userName)
         .query(`
             -- Begin a transaction to ensure atomicity
             BEGIN TRANSACTION;
@@ -21,8 +22,8 @@ export async function addUser(poolConnection, email, uniID) { //hard code uniID 
             SET @maxUserID = ISNULL(@maxUserID, 0) + 1;
             
             -- Step 3: Insert the new user into the table
-            INSERT INTO [dbo].[Users] (UserID, Email, UniID) 
-            VALUES (@maxUserID, @email, @uniID);
+            INSERT INTO [dbo].[Users] (UserID, Email, UniID, userName) 
+            VALUES (@maxUserID, @email, @uniID, @userName);
             
             -- Step 4: Commit the transaction
             COMMIT;
@@ -293,6 +294,7 @@ export async function addUpvote(poolConnection, userID, commentID) {
 
 export async function addRequest(
     poolConnection,
+    userName,
     uniID,
     classID,
     userID,
@@ -310,6 +312,7 @@ export async function addRequest(
 ) {
     try {
         let resultSet = await poolConnection.request()
+            .input('userName', sql.VarChar(15), userName)
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)
             .input('userID', sql.Int, userID)

@@ -1,7 +1,11 @@
 // Contains all of the functions for deleting data from the database
 // Each function takes a poolConnection and the relevant ID as arguments and returns the number of rows affected
 
-import { pool } from "mssql";
+// import { pool } from "mssql";
+
+import pkg from 'mssql';
+
+const { pool } = pkg;
 
 
 export async function deleteUser(poolConnection, userID) {

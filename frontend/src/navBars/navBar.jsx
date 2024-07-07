@@ -34,6 +34,7 @@ const NavBar = () => {
     console.log("removed userID from local storage");
     localStorage.removeItem("userID");
     localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
     localStorage.setItem("admin", 0);
     console.log("removed userEmail from local storage");
     console.log("reset admin to 0");
@@ -53,21 +54,7 @@ const NavBar = () => {
             />
           </NavLink>
         </div>
-        {loggedIn ? (
-          <div className="center-menu">
-            {localStorage.getItem("admin") === "1" ? (
-              <h1 className="navBar-header-text">Hello Admin</h1>
-            ) : (
-              <h1 className="navBar-header-text">Hello User</h1>
-            )}
-            <p className="userEmail-text">
-              {localStorage.getItem("userEmail")}
-            </p>
-          </div>
-        ) : (
           <h1 className="navBar-header-text">ClassMate</h1>
-        )}
-
         <div className="navBar-buttons">
           {loggedIn ? (
             <>
@@ -77,12 +64,10 @@ const NavBar = () => {
                 Admin Portal
               </button>
             </NavLink>
-              : <NavLink to="/Request">
-              <button className="navBar-logout-text" >
-                Request Addition
-              </button>
-            </NavLink>
+              : ''
               }
+              {localStorage.getItem('admin') == 0 ? <p>{localStorage.getItem("userName")}</p> : ''}
+              
               <button className="navBar-logout-text" onClick={logout}>
                 Log Out
               </button>

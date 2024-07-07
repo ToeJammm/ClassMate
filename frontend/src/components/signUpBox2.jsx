@@ -13,17 +13,18 @@ export default function SignUpBox2() {
 
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPassword, setSignUpPassword] = useState("");
+  const [userName, setUserName] = useState('');
   const[loggedIn, setLoggedIn] = useContext(LoginContext);
   const [error, setError] = useState(null); // State variable for error message
   const [user, setUser] = useState({});
   const navigate = useNavigate();
   // const [userID, setUserID] = useState("");
 
-  const addUser = async (email, uniID) => {
+  const addUser = async (email, uniID, userName) => {
     try {
-      console.log("add user called");
-      const response = await axios.post(`${apiUrl}/adduser`, { email, uniID });
-      console.log("added user " +  email  + " to the database");
+      console.log("add user called for", userName);
+      const response = await axios.post(`${apiUrl}/adduser`, { email, uniID, userName });
+      console.log("added user " +  userName + " to the database");
       return response.data;
     } catch (error) {
       // Handle error
@@ -50,12 +51,14 @@ export default function SignUpBox2() {
 
   const fetchUserID = async (email) => {
     try {
-      const response = await axios.get(`${apiUrl}/email/${email}/userID`);
-      console.log(response.data[0].UserID);
+      const response = await axios.get(`${apiUrl}/${email}/userInfo`);
+      console.log(response.data[0]);
       localStorage.setItem("userID", response.data[0].UserID);
       localStorage.setItem("userEmail", email);
-      console.log("saved " + localStorage.get("userID") + "into local storage");
-      console.log("saved " + localStorage.get("userEmail") + "into local storage");
+      localStorage.setItem("userName", response.data[0].userName);
+      // console.log("saved " + localStorage.get("userID") + "into local storage");
+      // console.log("saved " + localStorage.get("userEmail") + "into local storage");
+     
     } catch (error) {
       setError(error.message);
     }
@@ -73,12 +76,12 @@ export default function SignUpBox2() {
       try{
         localStorage.setItem("loggedIn", true);
       const userEmail = currentUser.email;
-      console.log("User's email:", userEmail);
 
       //adds user to database and saves their new ID to local storage
       // await addUser(currentUser.email, 1);
       await fetchUserID(currentUser.email);      
       setLoggedIn(isLoggedIn);
+       console.log("saved", localStorage.getItem("userName"), "to local storage")
       console.log("signup page setting loggedIn to " + isLoggedIn);
       } catch (error) {
         console.log(error);
@@ -99,7 +102,7 @@ export default function SignUpBox2() {
 
 const signUp = async () => {
     try {
-      await addUser(signUpEmail, 1);
+      await addUser(signUpEmail, 1, userName);
       console.log("added user to azure");
       //creates new user
       const newUser = await createUserWithEmailAndPassword(
@@ -132,10 +135,15 @@ const signUp = async () => {
             onChange={(event) => {
                 setSignUpEmail(event.target.value);
             }}></input> 
+                      <input className="input" type="text" maxLength={15} placeholder="username"
+            onChange={(event) => {
+                setUserName(event.target.value);
+            }}></input> 
           <input className="input" type="password" placeholder="password"
           onChange={(event) => {
             setSignUpPassword(event.target.value);
           }}></input> 
+          
         </div>
         <button className="signUpButton" onClick={signUp}>Submit</button>
         {error && <p className="error-message">{error}</p>}

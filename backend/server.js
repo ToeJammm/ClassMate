@@ -7,7 +7,7 @@ import cron from 'node-cron';
 
 //Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
-import {getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserID, getClassRatings} from './sqlquery.js'
+import {getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserInfo, getClassRatings} from './sqlquery.js'
 import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser, addRequest } from './sqladd.js';
 import { deleteRequest, deleteUniversity, deleteClassType, deleteComment, deleteClass, deleteDifficulty, deleteProfessor, deleteUser } from './sqldelete.js';
 
@@ -95,10 +95,10 @@ app.get('/uni/:uniID/classtype/:classTypeID/classes', async (req, res) => {
     res.json(record);
 });
 
-app.get('/:email/userID', async (req, res) => {
+app.get('/:email/userInfo', async (req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
-    let record = await getUserID(poolConnection, req.params.email);
+    let record = await getUserInfo(poolConnection, req.params.email, req.params.userName);
     res.json(record);
 });
 
@@ -144,7 +144,7 @@ app.post('/addprofessor', async (req, res) => {
 app.post('/adduser', async (req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
-    let record = await addUser(poolConnection, req.body.email, req.body.uniID);
+    let record = await addUser(poolConnection, req.body.email, req.body.uniID, req.body.userName);
     res.json(record);
 });
 
@@ -227,6 +227,7 @@ app.get('/requests', async(req, res) => {
     lastActivity = Date.now();
     let record = await getUserRequests(
         poolConnection,
+        req.body.userName,
         req.body.uniID,
         req.body.classID,
         req.body.userID,

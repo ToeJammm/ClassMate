@@ -13,11 +13,9 @@ function Home() {
   return (
     <div className="home-container">
       <div className="searchBar">
+        <h1 className="home-call">Find Your University</h1>
         <SearchBar setResults={setResults} />
         <SearchResultsList results={results} />
-      </div>
-      <div className="support">
-        <p>Are we missing your school/class/professor? <br></br>Let us know! classmate5upp0rt1@gmail.com</p>
       </div>
     </div>
       

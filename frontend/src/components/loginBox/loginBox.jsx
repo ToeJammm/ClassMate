@@ -36,11 +36,12 @@ useEffect(() => {
 
   const fetchUserID = async (email) => {
     try {
-      const response = await axios.get(`${apiUrl}/${email}/userID`);
-      console.log("user's ID: ", response.data[0].UserID);
+      const response = await axios.get(`${apiUrl}/${email}/userInfo`);
+      console.log(response.data[0]);
       // setUserID(response.data[0].UserID); // Assuming response contains the user ID
       console.log("is admin: ", isAdmin(response.data[0].UserID))
       localStorage.setItem("userID", response.data[0].UserID);
+      localStorage.setItem("userName", response.data[0].userName);
       if(isAdmin(response.data[0].UserID)) {
         console.log("welcome Admin, setting admin status to 1");
         localStorage.setItem("admin", 1);
@@ -67,6 +68,7 @@ useEffect(() => {
           await fetchUserID(currentUser.email); // gets userID from db
           localStorage.setItem("userEmail", currentUser.email);
           console.log("I just saved " + localStorage.getItem("userID") + " to local storage");
+          console.log("I just saved " + localStorage.getItem("userName") + " to local storage");
           console.log("saved " + localStorage.getItem("userEmail") + " into local storage");
           console.log("loggedIn set to " + localStorage.getItem("loggedIn"));
           navigate("/");
@@ -90,7 +92,7 @@ useEffect(() => {
     // Loop through adminIDs array
     for (let i = 0; i < adminIDs.length; i++) {
       console.log("comparing: ", userId, "and", adminIDs[i]);
-      if (userId === adminIDs[i]) {
+      if (userId == adminIDs[i]) {
         return true;
       }
     }
@@ -106,6 +108,7 @@ const Login = async () => {
         loginPassword,
     );
     
+
     
 
 } catch (error) {

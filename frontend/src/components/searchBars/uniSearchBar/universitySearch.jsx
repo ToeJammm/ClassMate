@@ -29,7 +29,7 @@ export const SearchBar = ({ setResults }) => {
             <div className='searchBar'>
             <input className='textBox'
                 type="text"
-                placeholder="Search University..."
+                placeholder="Search..."
                 value={input}
                 onChange={(e) => handleChange(e.target.value)}
             />
