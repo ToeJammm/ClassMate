@@ -16,3 +16,14 @@ export const FetchReviews = async (uni, classID) => {
     return []; // Return an empty array in case of error
   }
 };
+
+export const FetchRequests = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/requests`);
+    console.log("fetching requests");
+    return response.data; // Return the fetched review
+  } catch (error) {
+    console.log(error);
+    return []; // Return an empty array in case of error
+  }
+};

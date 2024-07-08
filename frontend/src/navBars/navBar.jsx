@@ -66,7 +66,7 @@ const NavBar = () => {
             </NavLink>
               : ''
               }
-              {localStorage.getItem('admin') == 0 ? <p>{localStorage.getItem("userName")}</p> : ''}
+              {localStorage.getItem('admin') == 0 ? <p class="userName-store">{localStorage.getItem("userName")}</p> : ''}
               
               <button className="navBar-logout-text" onClick={logout}>
                 Log Out

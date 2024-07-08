@@ -77,7 +77,7 @@ useEffect(() => {
         }
       } else {
         console.log("removing user from local storage");
-        localStorage.removeItem("loggedIn");
+        localStorage.setItem("loggedIn", false);
         localStorage.removeItem("userEmail"); // Remove user's email if not logged in
         localStorage.removeItem("userID");
       }

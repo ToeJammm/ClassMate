@@ -1,0 +1,11 @@
+.request-wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 30vw;
+    justify-content: space-around;
+    background-color: #f0f0f0;
+    margin: 10px;
+    border-radius: 7px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+
+}

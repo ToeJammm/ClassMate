@@ -1,0 +1,27 @@
+.request-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.request-element{
+    padding: 0px;
+    margin: 0px;
+}
+
+.noRequestDiv{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+@media only screen and (max-width: 767px){
+    .request-list{
+        width: 100vw;
+        height: 70vh;
+        
+    }
+    .request-element{
+        margin-left:8vw;
+    }
+}

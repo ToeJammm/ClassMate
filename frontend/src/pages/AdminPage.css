@@ -1,7 +1,16 @@
 .adminPage{
     height: 100vh;
     display: flex;
+    flex-direction: column;
+}
+
+.lowerPart {
+    display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 }
 
 .welcome{
@@ -16,8 +25,13 @@
 .requests{
     display: flex;
     flex-direction: column;
-    background-color: gray;
+    background-color: lightgray;
     height: 75vh;
-    
-
+    /*THIS MAY NOT WORK BUT I HOPE IT DOES*/
+    max-height: height;
+    width: 35vw;
+    align-content: center;   
+    align-items: center;
+    overflow-y: scroll;
+    margin-left: 20vw;
 }
