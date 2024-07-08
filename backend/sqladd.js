@@ -333,21 +333,21 @@ export async function addRequest(
 
                 -- Insert a new row into the UniversityFeedback table
                 INSERT INTO [dbo].[UniversityFeedback] (
-                    uniID,
-                    classID,
-                    userID,
-                    requestID,
-                    professorID,
-                    universityName,
-                    professorName,
-                    className,
-                    classNum,
-                    classTypeID,
-                    comment,
-                    termTaken,
-                    grade,
-                    difficultyValue,
-                    qualityValue
+                    UniID,
+                    ClassID,
+                    UserID,
+                    RequestID,
+                    ProfessorID,
+                    UniversityName,
+                    ProfessorName,
+                    ClassName,
+                    ClassNum,
+                    ClassTypeID,
+                    Comment,
+                    TermTaken,
+                    Grade,
+                    DifficultyValue,
+                    QualityValue
                 ) VALUES (
                     @uniID,
                     @classID,
