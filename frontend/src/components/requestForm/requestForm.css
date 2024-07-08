@@ -1,0 +1,177 @@
+.addReview-button{
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    width: fit-content;
+    cursor: pointer;
+    border: black;
+    font-size: large;
+    transition: background-color 0.3s ease;
+}
+
+.addReview-button:hover{
+    background-color: rgb(71, 71, 71);
+    color: white;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 10px;
+    width: fit-content;
+    cursor: pointer;
+    border: rgb(117, 117, 117);
+    font-size: large;
+}
+
+.popup-inner{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 35vw;
+    max-width: 650;
+    box-shadow: 0px 4px 8px #c0c0c0;
+}
+
+.popup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.request-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding-bottom: 80px;
+    margin-left: 5vw;
+}
+
+.top-part {
+    display: flex;
+    flex-direction: column;
+}
+
+.uni-select {
+    margin-bottom: 15px;
+    background-color: #000000;
+    border: black;
+    color: white;
+    border-color: black;
+    padding: 5px;
+    width: 100%;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.class-select {
+    margin-bottom: 15px;
+    background-color: #000000;
+    border: black;
+    color: white;
+    border-color: black;
+    padding: 5px;
+    width: 100%;
+    border-radius: 7px;
+    text-align: center;
+}
+
+.dropdown{
+    margin-bottom: 15px;
+    background-color: #000000;
+    border: black;
+    color: white;
+    border-color: black;
+    padding: 5px;
+    width: 100%;
+    border-radius: 7px;
+}
+
+.review-inputs{
+    margin: 5px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 27vw;
+}
+
+.commentBox{
+    text-align: left;
+    padding-bottom: 80px;
+    margin: 10px;
+    background-color: #f0f0f0;
+    border-radius: 7px;
+    width: 27vw;
+    padding-top: 5px;
+    padding-left: 5px;
+    overflow-y: scroll;
+}
+
+.goBackBox{
+    display: flex;
+    flex-direction: row;
+    justify-items: start;
+    height: 15px;
+    width: 100%;
+}
+
+.goBack{
+    margin: 0px;
+    cursor: pointer;
+}
+
+.review-input{
+    text-align: left;
+    margin: 10px;
+    padding: 5px;
+    background-color: #f0f0f0;
+    border-radius: 7px;
+    width: 27vw;
+}
+
+.ratingswrapper{
+    display: flex;
+    width: 100%;
+}
+
+@media only screen and (max-width: 767px){
+    .addReview-button{
+        padding: 10px;
+    }
+    
+    .addReview-button:hover{
+        padding: 10px;
+    }
+    
+    .popup{
+        width: 90vw;
+        height: 80vh;
+    }
+    
+    .dropdown{
+        width: 30vw;
+    }
+    
+    .review-inputs{
+        margin-right: 12vw;
+        width: 60vw;
+    }
+    
+    .commentBox{
+        margin-left: 14vw;
+        width: 70vw;
+    }
+    
+}
+
+@media only screen and (max-width: 280px){
+    .popup{
+        width: 90vw;
+        height: 80vh;
+    }
+}

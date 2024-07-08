@@ -2,10 +2,12 @@ import "./AdminPage.css";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import RequestList from "../components/requestList/requestList";
+import RequestForm from "../components/requestForm/requestForm";
 import { FetchRequests } from "../API/reviewsAPI";
 
 export default function AdminPage() {
   const [requests, setRequests] = useState([]);
+  const form = [];
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -39,7 +41,7 @@ export default function AdminPage() {
         </div>
         <div className="lowerPart">
           <div className="admin-form">
-            <p>Admin form</p>
+            <RequestForm form={form} />
           </div>
           <div className="requests">
             <RequestList requests={requests} />
