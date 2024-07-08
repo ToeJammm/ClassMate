@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./requestForm.css";
 import { FetchReviews } from "../../API/reviewsAPI";
-// import { TeacherSearBar } from "../searchBars/teacherSearchBar/teacherSearchBar"
-// import { TeacherSearchList } from "../searchBars/teacherSearchBar/teacherSearchList";
+import { SearchBar } from "../searchBars/uniSearchBar/universitySearch";
+import { SearchResultsList } from "../searchBars/uniSearchBar/uniSearchResultsList";
 const apiUrl = __API_BASE_URL__;
 
 export default function RequestForm({ form }) {
@@ -30,13 +31,15 @@ export default function RequestForm({ form }) {
     fetchData();
   }, []);
 
+  const [uniID, setUniID] = useState(-1);
+  const [uniName, setUniName] = useState("");
+  const [results, setResults] = useState([]);
   const [difficultyValue, setDifficulty] = useState(1);
   const [qualityValue, setquality] = useState(1);
   const [grade, setGrade] = useState("A+");
   const [termTaken, setTermTaken] = useState("Fall");
   const [year, setYear] = useState(new Date().getFullYear());
   const [comment, setComment] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
   const [userID, setUserID] = useState("");
 
   useEffect(() => {
@@ -48,6 +51,11 @@ export default function RequestForm({ form }) {
       console.log("user is not logged in, won't be able to make a post");
     }
   }, []);
+
+  useEffect(() => {
+    console.log("uniID: " + uniID);
+    console.log("uniName: " + uniName);
+  }, [uniID, uniName]);
 
   const handleSubmit = () => {
     const updatedTerm = termTaken + " " + year;
@@ -106,10 +114,13 @@ export default function RequestForm({ form }) {
 
             <div className="top-part">
                 <div className="uni-select">
-                    <p>Select Uni</p>
+                  <SearchBar setResults={setResults} setUniName={setUniName} setUniID={setUniID} />
+                  <SearchResultsList results={results} setUniID={setUniID} setUniName={setUniName}/>
                 </div>
                 <div className="class-select">
-                    <p>Select Class</p>
+                    <p>Class Type Name</p>
+                    <p>Class Num</p>
+                    <p>Class Name</p>
                 </div>
             </div>
 

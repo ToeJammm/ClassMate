@@ -5,12 +5,17 @@ import { SearchResult } from "./searchResult";
 import { useNavigate } from "react-router-dom";
 
 
-export const SearchResultsList = ({ results }) => {
+export const SearchResultsList = ({ results, setUniID, setUniName }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (result) => {
     // Navigate to the UniversityPage with the selected result as state
-    navigate(`/University/${result.UniID}`, { state: { result: result } });
+    if (setUniID) { //For request form
+      setUniID(result.UniID);
+      setUniName(result.UniName);
+    } else {
+      navigate(`/University/${result.UniID}`, { state: { result: result } }); // Regular search bar
+    }
   };
 
   return (

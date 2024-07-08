@@ -4,7 +4,7 @@ import "./universitySearchBar.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const SearchBar = ({ setResults }) => {
+export const SearchBar = ({ setResults, setUniName, setUniID }) => {
     const [input, setInput] = useState("");
 
     
@@ -22,6 +22,10 @@ export const SearchBar = ({ setResults }) => {
     const handleChange = (value) => {
         setInput(value);
         fetchData(value);
+        if (setUniName) {
+            setUniName(value);
+            setUniID(-1);
+        }
     }
 
     return (
