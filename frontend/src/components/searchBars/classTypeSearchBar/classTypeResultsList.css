@@ -1,0 +1,18 @@
+.results-list {
+    width: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 8px #ddd;
+    border-radius: 10px;
+    max-height: 350px;
+    width: 40vw;
+    overflow-y: scroll;
+}
+
+@media only screen and (max-width: 767px){
+    .results-list{
+        width: 70vw;
+        margin-top: -22vw;
+    }
+}

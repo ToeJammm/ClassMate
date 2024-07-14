@@ -78,6 +78,13 @@
     width: 100%;
     border-radius: 7px;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.class-inputs-popup {
+    display: flex;
+    flex-direction: column;
 }
 
 .dropdown{

@@ -5,11 +5,17 @@ import "./requestForm.css";
 import { FetchReviews } from "../../API/reviewsAPI";
 import { SearchBar } from "../searchBars/uniSearchBar/universitySearch";
 import { SearchResultsList } from "../searchBars/uniSearchBar/uniSearchResultsList";
+import { ClassSearchBar } from "../searchBars/classSearchBar/classSearchBar";
+import { ClassSearchResult } from "../searchBars/classSearchBar/classSearchResult";
+import { ClassTypeSearchBar } from "../searchBars/classTypeSearchBar/classTypeSearch";
+import { ClassTypeResultsList } from "../searchBars/classTypeSearchBar/classTypeResultsList";
+
 const apiUrl = __API_BASE_URL__;
 
 export default function RequestForm({ form }) {
   const [professors, setProfessors] = useState([]);
   const [professorID, setProfessorID] = useState(""); //professor ID wansn't getting set unless I did this
+  const [showClassPopup, setShowClassPopup] = useState(false);
   useEffect(() => {
     //gets list of professors
     const fetchData = async () => {
@@ -33,7 +39,9 @@ export default function RequestForm({ form }) {
 
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
-  const [results, setResults] = useState([]);
+  const [uniResults, setUniResults] = useState([]);
+  const [classResults, setClassResults] = useState([]);
+  const [classTypeResults, setClassTypeResults] = useState([]);
   const [difficultyValue, setDifficulty] = useState(1);
   const [qualityValue, setquality] = useState(1);
   const [grade, setGrade] = useState("A+");
@@ -102,6 +110,11 @@ export default function RequestForm({ form }) {
     return years;
   };
 
+  const classPopup = () => {
+    setShowClassPopup(!showClassPopup);
+    console.log("classPopup =", showClassPopup);
+  }
+
   // Call the function to get the array of last 10 years
   const lastTenYears = getLastTenYears();
 
@@ -114,13 +127,31 @@ export default function RequestForm({ form }) {
 
             <div className="top-part">
                 <div className="uni-select">
-                  <SearchBar setResults={setResults} setUniName={setUniName} setUniID={setUniID} />
-                  <SearchResultsList results={results} setUniID={setUniID} setUniName={setUniName}/>
+                  <SearchBar setResults={setUniResults} setUniName={setUniName} setUniID={setUniID} />
+                  <SearchResultsList results={uniResults} setUniID={setUniID} setUniName={setUniName}/>
                 </div>
                 <div className="class-select">
-                    <p>Class Type Name</p>
-                    <p>Class Num</p>
-                    <p>Class Name</p>
+                  <div className="class-search-bar">
+                  {showClassPopup ? 
+                    <div className="class-inputs-popup">
+                      <ClassTypeSearchBar setResults={setUniResults} setUniName={setUniName} setUniID={setUniID} />
+                      <ClassTypeResultsList results={setClassTypeResults} setUniID={setUniID} setUniName={setUniName}/>
+                      <input type="text" placeholder="Class Number"></input>
+                      <input type="text" placeholder="Class Name"></input>
+                    </div>
+                    :
+                    <div className="class-searchbar-popup">
+                      <ClassSearchBar setResults={setUniResults} setUniID={setUniID} />
+                      <ClassSearchResult result={uniResults}/>
+                    </div>
+                  }
+                    </div>
+                  <div className="class-button">
+                    <input 
+                    type="checkbox"
+                    onChange={classPopup}
+                    ></input>
+                  </div>
                 </div>
             </div>
 
