@@ -7,9 +7,10 @@ const apiUrl = __API_BASE_URL__;
 export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClassTypeName }) => {
     const [input, setInput] = useState("");
 
+    console.log("Running ClassTypeSearchBar");
     
     const fetchData = async (value) => {
-            const response = await fetch(`${apiUrl}/uni/${uniID}/classtypes`);
+            const response = await fetch(`${apiUrl}/${uniID}/classTypes`);
             const json = await response.json();
             const result = json.filter((classType) => {
                 return classType && value &&
@@ -18,6 +19,7 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
                 classType.ClassType.toLowerCase().includes(value.toLowerCase());
             });
            setResults(result); 
+
     };
         
     const handleChange = (value) => {
@@ -34,7 +36,7 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
             <div className='searchBar'>
             <input className='textBox'
                 type="text"
-                placeholder="Search..."
+                placeholder="Search Class Type..."
                 value={input}
                 onChange={(e) => handleChange(e.target.value)}
             />

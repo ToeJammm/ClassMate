@@ -87,6 +87,17 @@
     flex-direction: column;
 }
 
+.class-searchbar-popup {
+    margin-bottom: 15px;
+    background-color: #000000;
+    border: black;
+    color: white;
+    border-color: black;
+    padding: 5px;
+    width: 100%;
+    border-radius: 7px;
+}
+
 .dropdown{
     margin-bottom: 15px;
     background-color: #000000;

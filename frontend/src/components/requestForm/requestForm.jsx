@@ -6,7 +6,7 @@ import { FetchReviews } from "../../API/reviewsAPI";
 import { SearchBar } from "../searchBars/uniSearchBar/universitySearch";
 import { SearchResultsList } from "../searchBars/uniSearchBar/uniSearchResultsList";
 import { ClassSearchBar } from "../searchBars/classSearchBar/classSearchBar";
-import { ClassSearchResult } from "../searchBars/classSearchBar/classSearchResult";
+import { ClassSearchResultsList2 } from "../searchBars/classSearchBar/classSearchResultList2";
 import { ClassTypeSearchBar } from "../searchBars/classTypeSearchBar/classTypeSearch";
 import { ClassTypeResultsList } from "../searchBars/classTypeSearchBar/classTypeResultsList";
 
@@ -39,9 +39,14 @@ export default function RequestForm({ form }) {
 
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
+  const [classID, setClassID] = useState(-1);
+  const [className, setClassName] = useState("");
+  const [classNum, setClassNum] = useState("");
   const [uniResults, setUniResults] = useState([]);
   const [classResults, setClassResults] = useState([]);
   const [classTypeResults, setClassTypeResults] = useState([]);
+  const [classTypeID, setClassTypeID] = useState(-1);
+  const [classTypeName, setClassTypeName] = useState("");
   const [difficultyValue, setDifficulty] = useState(1);
   const [qualityValue, setquality] = useState(1);
   const [grade, setGrade] = useState("A+");
@@ -113,10 +118,28 @@ export default function RequestForm({ form }) {
   const classPopup = () => {
     setShowClassPopup(!showClassPopup);
     console.log("classPopup =", showClassPopup);
+    setClassID(-1);
+    setClassName("");
+    setClassNum("");
+    setClassTypeID(-1);
+    setClassTypeName("");
+    setClassResults([]);
+    setClassTypeResults([]);
   }
 
   // Call the function to get the array of last 10 years
   const lastTenYears = getLastTenYears();
+
+  useEffect(() => {
+    console.log("classTypeID: ", classTypeID);
+    console.log("classTypeName: ", classTypeName);
+  }, [classTypeID, classTypeName]);
+
+  useEffect(() => {
+    console.log("classID: ", classID);
+    console.log("className: ", className);
+    console.log("classNum: ", classNum);
+  }, [classID, className, classNum]);
 
   return (
     <div className="request-container">
@@ -134,15 +157,15 @@ export default function RequestForm({ form }) {
                   <div className="class-search-bar">
                   {showClassPopup ? 
                     <div className="class-inputs-popup">
-                      <ClassTypeSearchBar setResults={setUniResults} setUniName={setUniName} setUniID={setUniID} />
-                      <ClassTypeResultsList results={setClassTypeResults} setUniID={setUniID} setUniName={setUniName}/>
+                      <ClassTypeSearchBar setResults={setClassTypeResults} uniID={uniID} setClassTypeID={setClassTypeID} setClassTypeName={setClassTypeName}/>
+                      <ClassTypeResultsList results={classTypeResults} setClassTypeID={setClassTypeID} setClassTypeName={setClassTypeName}/>
                       <input type="text" placeholder="Class Number"></input>
                       <input type="text" placeholder="Class Name"></input>
                     </div>
                     :
                     <div className="class-searchbar-popup">
-                      <ClassSearchBar setResults={setUniResults} setUniID={setUniID} />
-                      <ClassSearchResult result={uniResults}/>
+                      <ClassSearchBar setResults={setClassResults} uniID={uniID} setClassID={setClassID} setClassName={setClassName} setClassNum={setClassNum} />
+                      <ClassSearchResultsList2 results={classResults} uniID={uniID} setClassID={setClassID} setClassName={setClassName} setClassNum={setClassNum}/>
                     </div>
                   }
                     </div>

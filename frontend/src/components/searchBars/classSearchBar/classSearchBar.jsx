@@ -4,7 +4,7 @@ import "./classSearchBar.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const ClassSearchBar = ({ setResults, uniID }) => {
+export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, setClassNum }) => {
     const [input, setInput] = useState("");
 
     
@@ -22,6 +22,11 @@ export const ClassSearchBar = ({ setResults, uniID }) => {
     const handleChange = (value) => {
         setInput(value);
         fetchData(value);
+        if (setClassName) {
+            setClassName(value);
+            setClassID(-1);
+            setClassNum(-1);
+        }
     }
 
     return (
