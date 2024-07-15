@@ -204,3 +204,18 @@ export async function getUserRequests(poolConnection) {
         return null;
     }
 }
+
+
+export async function getUniClassTypes(poolConnection, UniID) {
+    try {
+        console.log("Requesting all uni classTypes");
+        let resultSet = await poolConnection.request().query(`
+        SELECT * FROM [dbo].[ClassType] 
+        WHERE UniID = '${UniID}'
+        `);
+        return resultSet.recordset;
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}

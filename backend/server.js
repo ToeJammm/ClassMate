@@ -7,9 +7,12 @@ import cron from 'node-cron';
 
 //Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
-import {getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserInfo, getClassRatings} from './sqlquery.js'
+import { getUniClassTypes, getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserInfo, getClassRatings} from './sqlquery.js'
 import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser, addRequest } from './sqladd.js';
 import { deleteRequest, deleteUniversity, deleteClassType, deleteComment, deleteClass, deleteDifficulty, deleteProfessor, deleteUser } from './sqldelete.js';
+// import { pool } from 'mssql';
+import pkg from 'mssql';
+const { pool } = pkg;
 
 const app = express();
 
@@ -242,13 +245,25 @@ app.get('/requests', async(req, res) => {
         req.body.grade,
         req.body.difficultyValue,
         req.body.qualityValue
-    );
-    res.json(record);
+    )
+    res.json(record)
 })
 
-app.delete('removerequest', async(req, res) => {
+app.delete('/removerequest', async(req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
     let record = await deleteUser(poolConnection, req.body.requestID);
     res.json(record);
+})
+
+app.get('/:UniID/classTypes', async(req, res) => {
+    await reopenConnection(poolConnection)
+    lastActivity = Date.now();
+    let record = await getUniClassTypes(
+        poolConnection, 
+        req.params.UniID,
+        req.params.ClassType,
+        req.params.ClassTypeID
+    )
+    res.json(record)
 })

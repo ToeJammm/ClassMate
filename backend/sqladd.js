@@ -292,6 +292,9 @@ export async function addUpvote(poolConnection, userID, commentID) {
     }
 }
 
+
+
+
 export async function addRequest(
     poolConnection,
     userName,
