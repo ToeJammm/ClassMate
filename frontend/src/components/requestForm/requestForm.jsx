@@ -115,6 +115,7 @@ export default function RequestForm({ form }) {
   // Call the function to get the array of last 10 years
   const lastTenYears = getLastTenYears();
 
+  //Logging the values of everything -- IDs will be -1 if the user is adding a new item
   useEffect(() => {
     console.log("classTypeID: ", classTypeID);
     console.log("classTypeName: ", classTypeName);
