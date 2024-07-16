@@ -5,7 +5,7 @@ import { SearchResult } from "./searchResult";
 import { useNavigate } from "react-router-dom";
 
 
-export const SearchResultsList = ({ results, setUniID, setUniName }) => {
+export const SearchResultsList = ({ results, setUniID, setUniName}) => {
   const navigate = useNavigate();
 
   const handleItemClick = (result) => {
@@ -13,6 +13,7 @@ export const SearchResultsList = ({ results, setUniID, setUniName }) => {
     if (setUniID) { //For request form
       setUniID(result.UniID);
       setUniName(result.UniName);
+      // setClickedOnUni(result.UniName);
     } else {
       navigate(`/University/${result.UniID}`, { state: { result: result } }); // Regular search bar
     }

@@ -4,7 +4,7 @@ import "./universitySearchBar.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const SearchBar = ({ setResults, setUniName, setUniID }) => {
+export const SearchBar = ({ setResults, setUniName, setUniID, uniName }) => {
     const [input, setInput] = useState("");
 
     
@@ -29,12 +29,12 @@ export const SearchBar = ({ setResults, setUniName, setUniID }) => {
     }
 
     return (
-        <div className='searchBar-container'>
+        <div className='uni-Searchbar-container'>
             <div className='searchBar'>
             <input className='textBox'
                 type="text"
                 placeholder="Search..."
-                value={input}
+                value={uniName}
                 onChange={(e) => handleChange(e.target.value)}
             />
         </div>

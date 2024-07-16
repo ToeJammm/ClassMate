@@ -1,10 +1,9 @@
-.searchBar-container {
+.uni-Searchbar-container {
     display: flex;
     background-color: #ffffff;
     width: 48vw;
     justify-content: center;
     border-radius: 10px;
-    margin-top: 100px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 

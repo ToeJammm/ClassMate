@@ -27,7 +27,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    background-color: #f2f2f2;
     padding: 20px;
     border-radius: 10px;
     min-width: 35vw;
@@ -54,6 +54,7 @@
 .top-part {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .uni-select {
@@ -89,7 +90,7 @@
 
 .class-searchbar-popup {
     margin-bottom: 15px;
-    background-color: #000000;
+
     border: black;
     color: white;
     border-color: black;

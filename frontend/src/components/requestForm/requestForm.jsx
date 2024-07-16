@@ -54,6 +54,8 @@ export default function RequestForm({ form }) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [comment, setComment] = useState("");
   const [userID, setUserID] = useState("");
+  const [classFullName, setClassFullName] = useState("");
+  // const [clickedOnUni, setClickedOnUni] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("userID") !== null) {
@@ -125,7 +127,8 @@ export default function RequestForm({ form }) {
     setClassTypeName("");
     setClassResults([]);
     setClassTypeResults([]);
-  }
+    setClassFullName("");
+  };
 
   // Call the function to get the array of last 10 years
   const lastTenYears = getLastTenYears();
@@ -139,6 +142,7 @@ export default function RequestForm({ form }) {
     console.log("classID: ", classID);
     console.log("className: ", className);
     console.log("classNum: ", classNum);
+    console.log("fullName: ", classFullName);
   }, [classID, className, classNum]);
 
   return (
@@ -149,33 +153,58 @@ export default function RequestForm({ form }) {
             <h2>Request Form</h2>
 
             <div className="top-part">
-                <div className="uni-select">
-                  <SearchBar setResults={setUniResults} setUniName={setUniName} setUniID={setUniID} />
-                  <SearchResultsList results={uniResults} setUniID={setUniID} setUniName={setUniName}/>
-                </div>
-                <div className="class-select">
-                  <div className="class-search-bar">
-                  {showClassPopup ? 
-                    <div className="class-inputs-popup">
-                      <ClassTypeSearchBar setResults={setClassTypeResults} uniID={uniID} setClassTypeID={setClassTypeID} setClassTypeName={setClassTypeName}/>
-                      <ClassTypeResultsList results={classTypeResults} setClassTypeID={setClassTypeID} setClassTypeName={setClassTypeName}/>
-                      <input type="text" placeholder="Class Number"></input>
-                      <input type="text" placeholder="Class Name"></input>
-                    </div>
-                    :
-                    <div className="class-searchbar-popup">
-                      <ClassSearchBar setResults={setClassResults} uniID={uniID} setClassID={setClassID} setClassName={setClassName} setClassNum={setClassNum} />
-                      <ClassSearchResultsList2 results={classResults} uniID={uniID} setClassID={setClassID} setClassName={setClassName} setClassNum={setClassNum}/>
-                    </div>
-                  }
-                    </div>
-                  <div className="class-button">
-                    <input 
-                    type="checkbox"
-                    onChange={classPopup}
-                    ></input>
+              <SearchBar
+                setResults={setUniResults}
+                setUniName={setUniName}
+                setUniID={setUniID}
+                uniName={uniName}
+              />
+              <SearchResultsList
+                results={uniResults}
+                setUniID={setUniID}
+                setUniName={setUniName}
+              />
+
+              <div className="class-search-bar">
+                <input type="checkbox" onChange={classPopup}></input>
+                {showClassPopup ? (
+                  <div className="class-inputs-popup">
+                    <ClassTypeSearchBar
+                      setResults={setClassTypeResults}
+                      uniID={uniID}
+                      setClassTypeID={setClassTypeID}
+                      setClassTypeName={setClassTypeName}
+                    />
+                    <ClassTypeResultsList
+                      results={classTypeResults}
+                      setClassTypeID={setClassTypeID}
+                      setClassTypeName={setClassTypeName}
+                    />
+                    <input type="text" placeholder="Class Number"></input>
+                    <input type="text" placeholder="Class Name"></input>
                   </div>
-                </div>
+                ) : (
+                  <div className="class-searchbar-popup">
+                    <ClassSearchBar
+                      setResults={setClassResults}
+                      setClassFullName={setClassFullName}
+                      uniID={uniID}
+                      setClassID={setClassID}
+                      setClassName={setClassName}
+                      setClassNum={setClassNum}
+                      classFullName={classFullName}
+                    />
+                    <ClassSearchResultsList2
+                      results={classResults}
+                      uniID={uniID}
+                      setClassID={setClassID}
+                      setClassName={setClassName}
+                      setClassNum={setClassNum}
+                      setClassFullName={setClassFullName}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="comment">

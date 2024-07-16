@@ -4,7 +4,7 @@ import "./classSearchBar.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, setClassNum }) => {
+export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, setClassNum, classFullName, setClassFullName }) => {
     const [input, setInput] = useState("");
 
     
@@ -26,6 +26,7 @@ export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, se
             setClassName(value);
             setClassID(-1);
             setClassNum(-1);
+            setClassFullName("")
         }
     }
 
@@ -35,7 +36,7 @@ export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, se
             <input className='textBox'
                 type="text"
                 placeholder="Search Class..."
-                value={input}
+                value={classFullName != "" ? classFullName : input}
                 onChange={(e) => handleChange(e.target.value)}
             />
         </div>

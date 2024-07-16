@@ -4,11 +4,20 @@
     background-position: center;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .searchBar {
     display: flex;
     flex-direction: column;
+    z-index: 2;
+    position: relative;
+}
+
+.request-button{
+  z-index: 1;
 }
 
 body, html {

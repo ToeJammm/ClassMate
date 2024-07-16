@@ -13,11 +13,9 @@ function Home() {
 
   return (
     <div className="home-container">
-      <div className="searchBar">
-        <h1 className="home-call">Find Your University</h1>
-        <SearchBar setResults={setResults} />
-        <SearchResultsList results={results} />
-        {localStorage.getItem("loggedIn") == "true" ? 
+  <h1 className="home-call">Find Your University</h1>
+ <div className="request-button">
+         {localStorage.getItem("loggedIn") == "true" ? 
             <NavLink to="/Request">
               <button className="navBar-logout-text" >
                 Request a new thing
@@ -29,8 +27,14 @@ function Home() {
                 Request a new thing
               </button>
             </NavLink>
-              }
-      </div>
+              }         
+        </div>
+      <div className="searchBar">
+      
+        <SearchBar setResults={setResults} />
+        <SearchResultsList results={results} />
+        </div>
+       
     </div>
       
   )
