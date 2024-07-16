@@ -9,39 +9,23 @@ import { ClassSearchBar } from "../searchBars/classSearchBar/classSearchBar";
 import { ClassSearchResultsList2 } from "../searchBars/classSearchBar/classSearchResultList2";
 import { ClassTypeSearchBar } from "../searchBars/classTypeSearchBar/classTypeSearch";
 import { ClassTypeResultsList } from "../searchBars/classTypeSearchBar/classTypeResultsList";
+import { ProfessorResultsList } from "../searchBars/professorSearchBar/professorResultsList";
+import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSearch";
+import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
 
 const apiUrl = __API_BASE_URL__;
 
 export default function RequestForm({ form }) {
-  const [professors, setProfessors] = useState([]);
-  const [professorID, setProfessorID] = useState(""); //professor ID wansn't getting set unless I did this
   const [showClassPopup, setShowClassPopup] = useState(false);
-  useEffect(() => {
-    //gets list of professors
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(`${apiUrl}/uni/${uni}/allprofessors`);
-        const sortedProfessors = result.data.sort((a, b) => {
-          // Compare professors' names alphabetically
-          return a.Name.localeCompare(b.Name);
-        });
-        console.log("sorted professors");
-        console.log(sortedProfessors);
-        setProfessors(sortedProfessors);
-        setProfessorID(sortedProfessors[0].ProfessorID); // initializes ID
-      } catch (error) {
-        console.error("Error fetching professors:", error);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
   const [classID, setClassID] = useState(-1);
   const [className, setClassName] = useState("");
   const [classNum, setClassNum] = useState("");
+  const [professorID, setProfessorID] = useState(-1);
+  const [professorName, setProfessorName] = useState("");
+  const [professorResults, setProfessorResults] = useState([]);
   const [uniResults, setUniResults] = useState([]);
   const [classResults, setClassResults] = useState([]);
   const [classTypeResults, setClassTypeResults] = useState([]);
@@ -80,7 +64,6 @@ export default function RequestForm({ form }) {
       qualityValue,
       grade,
       termTaken: updatedTerm,
-      professorID,
       comment,
       classID,
       userID,
@@ -89,7 +72,6 @@ export default function RequestForm({ form }) {
     console.log("difficultyValue: " + difficultyValue);
     console.log("utilityValue: " + qualityValue);
     console.log("grade: " + grade);
-    console.log("professorID: " + professorID);
     console.log("comment: " + comment);
     console.log("userID: " + userID);
     console.log("classID: " + classID);
@@ -145,6 +127,11 @@ export default function RequestForm({ form }) {
     console.log("fullName: ", classFullName);
   }, [classID, className, classNum]);
 
+  useEffect(() => {
+    console.log("professorID: ", professorID);
+    console.log("professorName: ", professorName);
+  }, [professorID, professorName]);
+
   return (
     <div className="request-container">
       {
@@ -164,6 +151,7 @@ export default function RequestForm({ form }) {
                 setUniID={setUniID}
                 setUniName={setUniName}
               />
+              <NewAddonDisplayPrompt ID={uniID} name={uniName} />
 
               <div className="class-search-bar">
                 <input type="checkbox" onChange={classPopup}></input>
@@ -174,12 +162,14 @@ export default function RequestForm({ form }) {
                       uniID={uniID}
                       setClassTypeID={setClassTypeID}
                       setClassTypeName={setClassTypeName}
+                      classTypeName={classTypeName}
                     />
                     <ClassTypeResultsList
                       results={classTypeResults}
                       setClassTypeID={setClassTypeID}
                       setClassTypeName={setClassTypeName}
                     />
+                    <NewAddonDisplayPrompt ID={classTypeID} />
                     <input type="text" placeholder="Class Number"></input>
                     <input type="text" placeholder="Class Name"></input>
                   </div>
@@ -202,8 +192,24 @@ export default function RequestForm({ form }) {
                       setClassNum={setClassNum}
                       setClassFullName={setClassFullName}
                     />
+                    <NewAddonDisplayPrompt ID={classID} />
                   </div>
-                )}
+                  )}
+                  <div className="professor-searchbar"> 
+                  <ProfessorSearchBar
+                    setResults={setProfessorResults}
+                    setProfessorID={setProfessorID}
+                    setProfessorName={setProfessorName}
+                    professorName={professorName}
+                    uniID={uniID}
+                  />
+                  <ProfessorResultsList
+                    results={professorResults}
+                    setProfessorID={setProfessorID}
+                    setProfessorName={setProfessorName}
+                  />
+                  <NewAddonDisplayPrompt ID={professorID} />
+                  </div>
               </div>
             </div>
 
@@ -278,20 +284,6 @@ export default function RequestForm({ form }) {
                   </select>
                 </div>
                 <div className="ratingswrapper">
-                  <div style={{ marginRight: "13px" }}>Professor</div>
-                  <select
-                    className="dropdown"
-                    onChange={(e) => setProfessorID(e.target.value)}
-                  >
-                    {professors.map((professor) => (
-                      <option
-                        key={professor.ProfessorID}
-                        value={professor.ProfessorID}
-                      >
-                        {professor.Name}
-                      </option>
-                    ))}
-                  </select>
                 </div>
                 <textarea
                   className="commentBox"

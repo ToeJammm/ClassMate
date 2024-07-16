@@ -1,22 +1,21 @@
 // eslint-disable-next-line no-unused-vars
 import {React, useState } from 'react';
-import "./classTypeSearch.css"
+import "./professorSearch.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClassTypeName, classTypeName }) => {
+export const ProfessorSearchBar = ({ setResults, uniID, setProfessorID, setProfessorName, professorName }) => {
     const [input, setInput] = useState("");
-
-    console.log("Running ClassTypeSearchBar");
     
     const fetchData = async (value) => {
-            const response = await fetch(`${apiUrl}/${uniID}/classTypes`);
+            const response = await fetch(`${apiUrl}/uni/${uniID}/allprofessors`);
             const json = await response.json();
-            const result = json.filter((classType) => {
-                return classType && value &&
-                classType.ClassType && 
-                classType.UniID && 
-                classType.ClassType.toLowerCase().includes(value.toLowerCase());
+            const result = json.filter((professor) => {
+                return professor && value &&
+                professor.Name && 
+                uniID && 
+                professor.ProfessorID &&
+                professor.Name.toLowerCase().includes(value.toLowerCase());
             });
            setResults(result); 
 
@@ -25,9 +24,9 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
     const handleChange = (value) => {
         setInput(value);
         fetchData(value);
-        if (setClassTypeName) {
-            setClassTypeName(value);
-            setClassTypeID(-1);
+        if (setProfessorName) {
+            setProfessorName(value);
+            setProfessorID(-1);
         }
     }
 
@@ -36,8 +35,8 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
             <div className='searchBar'>
             <input className='textBox'
                 type="text"
-                placeholder="Search Class Type..."
-                value={classTypeName}
+                placeholder="Search Professor from Uni..."
+                value={professorName}
                 onChange={(e) => handleChange(e.target.value)}
             />
         </div>
