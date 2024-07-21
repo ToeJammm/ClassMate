@@ -1,7 +1,7 @@
 .request-wrapper {
     display: flex;
     flex-direction: row;
-    width: 30vw;
+    width: 25vw;
     justify-content: space-around;
     background-color: #f0f0f0;
     margin: 10px;

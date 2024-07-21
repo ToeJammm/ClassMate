@@ -26,7 +26,7 @@ export default function AdminPage() {
   }, []);
 
   return (
-    <>
+    <div className="admin-wrapper">
       <div className="back">
         <img
           className="backArrow"
@@ -35,19 +35,23 @@ export default function AdminPage() {
           alt="ClassMateLogo"
         />
       </div>
-      <div className="adminPage">
-        <div className="welcome">
-          Welcome Admin, {localStorage.getItem("userName")}
-        </div>
+      <div className="adminContent">
+        
         <div className="lowerPart">
-          <div className="admin-form">
+          
             <RequestForm form={form} />
-          </div>
+          
           <div className="requests">
             <RequestList requests={requests} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
+
+
+{/* <div className="welcome">
+          Welcome Admin, {localStorage.getItem("userName")}
+        </div> */}

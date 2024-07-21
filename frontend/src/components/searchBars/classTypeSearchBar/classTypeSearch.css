@@ -1,10 +1,10 @@
-.searchBar-container {
+.classType-searchBar-border {
     display: flex;
     background-color: #ffffff;
-    width: 48vw;
+    width: 100%;
     justify-content: center;
     border-radius: 10px;
-    margin-top: 100px;
+    margin-top: 20px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
@@ -14,11 +14,12 @@
     align-items: center; /* Center vertically */
     margin-top: 40px;
     padding-bottom: 40px;
+    width: 80%;
 }
 
-.textBox {
+.classType-textBox {
     height: 40px;
-    width: 40vw;
+    width: 100%;
     border-radius: 7px;
     border-color: white;
     background-color: #f0f0f0;

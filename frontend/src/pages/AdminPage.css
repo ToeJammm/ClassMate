@@ -1,14 +1,23 @@
-.adminPage{
-    height: 100vh;
+.adminContent{
     display: flex;
     flex-direction: column;
+    margin-top: 10px;
 }
+
+.admin-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+
 
 .lowerPart {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    align-items: center;
+    align-items: start;
     height: 100%;
     width: 100%;
 }
@@ -26,12 +35,15 @@
     display: flex;
     flex-direction: column;
     background-color: lightgray;
-    height: 75vh;
+  
     /*THIS MAY NOT WORK BUT I HOPE IT DOES*/
-    max-height: height;
-    width: 35vw;
+    height: 70vh;
+    width: 28vw;
     align-content: center;   
     align-items: center;
     overflow-y: scroll;
-    margin-left: 20vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+    border-radius: 10px;
+    padding: 10px;
 }

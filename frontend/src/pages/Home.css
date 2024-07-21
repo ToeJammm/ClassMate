@@ -9,15 +9,18 @@
     align-items: center;
 }
 
-.searchBar {
+.home-searchBar {
     display: flex;
     flex-direction: column;
     z-index: 2;
     position: relative;
+    width: 70vw;
+    margin-top: 40px;
 }
 
 .request-button{
   z-index: 1;
+  margin-bottom: 15px;
 }
 
 body, html {
@@ -27,6 +30,7 @@ body, html {
   .home-call{
     font-family: Arial, Helvetica, sans-serif;
     font-size: 60px;
+    margin-bottom: 0px;
   }
 
   .support {

@@ -31,11 +31,11 @@ export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, se
     }
 
     return (
-        <div className='searchBar-container'>
+        <div className='class-searchBar-border'>
             <div className='searchBar'>
-            <input className='textBox'
+            <input className='class-textBox'
                 type="text"
-                placeholder="Search Class..."
+                placeholder="Search Class from Uni..."
                 value={classFullName != "" ? classFullName : input}
                 onChange={(e) => handleChange(e.target.value)}
             />

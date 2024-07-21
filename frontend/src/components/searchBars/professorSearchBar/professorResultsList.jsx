@@ -3,13 +3,14 @@ import React from "react";
 import "./professorResultsList.css"
 import { ProfessorSearchResult } from "./professorSearchResult";
 
-export const ProfessorResultsList = ({ results, setProfessorID, setProfessorName }) => {
+export const ProfessorResultsList = ({ results, setProfessorID, setProfessorName, setResults }) => {
 
   const handleItemClick = (result) => {
     // Navigate to the UniversityPage with the selected result as state
     if (setProfessorID) { //For request form
       setProfessorID(result.ProfessorID);
       setProfessorName(result.Name);
+      setResults([])
     }
   };
 

@@ -5,7 +5,7 @@ import { ClassSearchResult } from "./classSearchResult";
 import { useNavigate } from "react-router-dom";
 
 
-export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassName, setClassNum, setClassFullName }) => {
+export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassName, setClassNum, setClassFullName, setResults }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (result) => {
@@ -15,6 +15,7 @@ export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassNa
       setClassName(result.ClassName);
       setClassNum(result.ClassNum);
       setClassFullName(result.FullName)
+      setResults([])
     }
 
     // Navigate to the UniversityPage with the selected result as state

@@ -1,23 +1,26 @@
-.uni-Searchbar-container {
+.uni-Searchbar-border {
     display: flex;
+    flex-direction: column;
     background-color: #ffffff;
-    width: 48vw;
+    width: 100%;
+    height: 120px;
     justify-content: center;
+    align-items: center;
     border-radius: 10px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
 }
 
-.searchBar {
+.uni-searchBar {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    margin-top: 40px;
-    padding-bottom: 40px;
+    width: 80%;
 }
 
-.textBox {
+
+.uni-textBox {
     height: 40px;
-    width: 40vw;
+    width: 100%;
     border-radius: 7px;
     border-color: white;
     background-color: #f0f0f0;

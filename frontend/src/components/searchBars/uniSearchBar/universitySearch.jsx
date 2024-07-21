@@ -1,12 +1,12 @@
 // eslint-disable-next-line no-unused-vars
 import {React, useState } from 'react';
 import "./universitySearchBar.css"
-
+import { NewAddonDisplayPrompt } from '../../newAddonDisplayPrompt/newAddonDisplayPrompt';
 const apiUrl = __API_BASE_URL__;
 
 export const SearchBar = ({ setResults, setUniName, setUniID, uniName }) => {
     const [input, setInput] = useState("");
-
+    const [uniID, setUniId] = useState(-1);
     
     const fetchData = async (value) => {
             const response = await fetch(`${apiUrl}/universities`);
@@ -29,17 +29,18 @@ export const SearchBar = ({ setResults, setUniName, setUniID, uniName }) => {
     }
 
     return (
-        <div className='uni-Searchbar-container'>
-            <div className='searchBar'>
-            <input className='textBox'
+       
+        <div className='uni-Searchbar-border'>
+            <NewAddonDisplayPrompt ID={uniID} name={uniName} notHomePage={setUniName}/>
+            <div className='uni-searchBar'>
+            <input className='uni-textBox'
                 type="text"
                 placeholder="Search University..."
                 value={uniName}
                 onChange={(e) => handleChange(e.target.value)}
             />
-        </div>
-        </div>
-        
+            </div>
+          </div>
     );
 }
 

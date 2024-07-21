@@ -136,11 +136,8 @@ export default function RequestForm({ form }) {
   return (
     <div className="request-container">
       {
-        <div className="popup">
           <div className="popup-inner">
             <h2>Request Form</h2>
-
-            <div className="top-part">
               <SearchBar
                 setResults={setUniResults}
                 setUniName={setUniName}
@@ -148,14 +145,18 @@ export default function RequestForm({ form }) {
                 uniName={uniName}
               />
               <SearchResultsList
+                setResults={setUniResults}
                 results={uniResults}
                 setUniID={setUniID}
                 setUniName={setUniName}
               />
-              <NewAddonDisplayPrompt ID={uniID} name={uniName} />
 
-              <div className="class-search-bar">
-                <input type="checkbox" onChange={classPopup}></input>
+            
+                <div className="checkBox-wrapper">
+                 <input type="checkbox" onChange={classPopup}></input> 
+                 <p>Check Box If Class Does Not Exist</p>
+                </div>
+                
                 {showClassPopup ? (
                   <div className="class-inputs-popup">
                     <ClassTypeSearchBar
@@ -166,13 +167,14 @@ export default function RequestForm({ form }) {
                       classTypeName={classTypeName}
                     />
                     <ClassTypeResultsList
+                      setResults={setClassTypeResults}
                       results={classTypeResults}
                       setClassTypeID={setClassTypeID}
                       setClassTypeName={setClassTypeName}
                     />
                     <NewAddonDisplayPrompt ID={classTypeID} />
-                    <input type="text" placeholder="Class Number"></input>
-                    <input type="text" placeholder="Class Name"></input>
+                    <input type="text" placeholder="Class Number" className="requestInput"></input>
+                    <input type="text" placeholder="Class Name" className="requestInput"></input>
                   </div>
                 ) : (
                   <div className="class-searchbar-popup">
@@ -187,6 +189,7 @@ export default function RequestForm({ form }) {
                     />
                     <ClassSearchResultsList2
                       results={classResults}
+                      setResults={setClassResults}
                       uniID={uniID}
                       setClassID={setClassID}
                       setClassName={setClassName}
@@ -206,13 +209,13 @@ export default function RequestForm({ form }) {
                   />
                   <ProfessorResultsList
                     results={professorResults}
+                    setResults={setProfessorResults}
                     setProfessorID={setProfessorID}
                     setProfessorName={setProfessorName}
                   />
                   <NewAddonDisplayPrompt ID={professorID} />
                   </div>
-              </div>
-            </div>
+           
 
             <div className="comment">
               <div className="review-inputs">
@@ -299,7 +302,7 @@ export default function RequestForm({ form }) {
               </button>
             </div>
           </div>
-        </div>
+        
       }
     </div>
   );

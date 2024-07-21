@@ -31,9 +31,9 @@ export const ProfessorSearchBar = ({ setResults, uniID, setProfessorID, setProfe
     }
 
     return (
-        <div className='searchBar-container'>
+        <div className='prof-searchBar-border'>
             <div className='searchBar'>
-            <input className='textBox'
+            <input className='prof-textBox'
                 type="text"
                 placeholder="Search Professor from Uni..."
                 value={professorName}

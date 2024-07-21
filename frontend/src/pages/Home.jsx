@@ -18,19 +18,18 @@ function Home() {
          {localStorage.getItem("loggedIn") == "true" ? 
             <NavLink to="/Request">
               <button className="navBar-logout-text" >
-                Request a new thing
+               Or Request a New One
               </button>
             </NavLink>
               :
             <NavLink to="/Login">
-              <button className="navBar-logout-text" >
-                Request a new thing
+              <button className="navBar-logout-text">
+                Request a new One
               </button>
             </NavLink>
               }         
         </div>
-      <div className="searchBar">
-      
+      <div className="home-searchBar">
         <SearchBar setResults={setResults} />
         <SearchResultsList results={results} />
         </div>
