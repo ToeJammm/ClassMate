@@ -15,7 +15,7 @@ import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayP
 
 const apiUrl = __API_BASE_URL__;
 
-export default function RequestForm({ form }) {
+export default function RequestForm({ requestData }) {
   const [showClassPopup, setShowClassPopup] = useState(false);
 
   const [uniID, setUniID] = useState(-1);

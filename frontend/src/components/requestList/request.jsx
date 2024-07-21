@@ -1,6 +1,13 @@
 import "./request.css";
 
-export default function Request({ request }) {
+export default function Request({ request, setRequestData }) {
+
+  // handleClick = () => {
+  //   //on click...set requestData object
+    
+  // }
+
+
   return (
     <div className="request-wrapper">
       <p className="name">{request.UserName}</p>
