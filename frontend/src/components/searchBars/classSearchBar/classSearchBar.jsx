@@ -32,7 +32,7 @@ export const ClassSearchBar = ({ setResults, uniID, setClassName, setClassID, se
 
     return (
         <div className='class-searchBar-border'>
-            <div className='searchBar'>
+            <div className='class-searchBar'>
             <input className='class-textBox'
                 type="text"
                 placeholder="Search Class from Uni..."

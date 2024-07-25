@@ -33,7 +33,7 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
 
     return (
         <div className='classType-searchBar-border'>
-            <div className='searchBar'>
+            <div className='classType-searchBar'>
             <input className='classType-textBox'
                 type="text"
                 placeholder="Search Class Type..."

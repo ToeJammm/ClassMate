@@ -14,8 +14,8 @@
     flex-direction: column;
     z-index: 2;
     position: relative;
-    width: 70vw;
     margin-top: 40px;
+    width: 80vw;
 }
 
 .request-button{

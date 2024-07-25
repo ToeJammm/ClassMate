@@ -29,9 +29,7 @@ export const SearchBar = ({ setResults, setUniName, setUniID, uniName }) => {
     }
 
     return (
-       
         <div className='uni-Searchbar-border'>
-            <NewAddonDisplayPrompt ID={uniID} name={uniName} notHomePage={setUniName}/>
             <div className='uni-searchBar'>
             <input className='uni-textBox'
                 type="text"
@@ -43,4 +41,5 @@ export const SearchBar = ({ setResults, setUniName, setUniID, uniName }) => {
           </div>
     );
 }
+ {/* <NewAddonDisplayPrompt ID={uniID} name={uniName} notHomePage={setUniName}/> */}
 

@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import React from "react";
-import "../uniSearchBar/universitySearchBar.css"
+import "./classSearchResultList.css"
 import { ClassSearchResult } from "./classSearchResult";
 import { useNavigate } from "react-router-dom";
 

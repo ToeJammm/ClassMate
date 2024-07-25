@@ -1,12 +1,13 @@
 import "./request.css";
 
-export default function Request({ request, setRequestData }) {
+export default function Request({ request, setRequestData, num, setNum }) {
 
   const handleClick = () => {
     // Grab every part of the request object that we need
     console.log("Button clicked")
 
-    //on click...set requestData object
+      //on click...set requestData object
+      setNum(num++)
     setRequestData(request);
   }
 

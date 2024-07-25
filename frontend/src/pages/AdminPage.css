@@ -18,6 +18,7 @@
     flex-direction: row;
     justify-content: space-around;
     align-items: start;
+    gap: 5vw;
     height: 100%;
     width: 100%;
 }
@@ -35,15 +36,13 @@
     display: flex;
     flex-direction: column;
     background-color: lightgray;
-  
+    box-shadow: inset 0 5px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
     /*THIS MAY NOT WORK BUT I HOPE IT DOES*/
-    height: 70vh;
+    height: 800px;
     width: 28vw;
     align-content: center;   
     align-items: center;
     overflow-y: scroll;
-    margin-left: 5vw;
-    margin-right: 5vw;
     border-radius: 10px;
-    padding: 10px;
+    padding: 20px;
 }

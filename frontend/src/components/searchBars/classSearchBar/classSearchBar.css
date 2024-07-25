@@ -1,25 +1,27 @@
 .class-searchBar-border {
     display: flex;
+    flex-direction: column;
     background-color: #ffffff;
     width: 100%;
+    height: 90px;
     justify-content: center;
+    align-items: center;
     border-radius: 10px;
-    margin-top: 20px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
+    z-index: 2;
+    position: relative;
 }
 
-.searchBar {
+.class-searchBar {
     display: flex;
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
-    margin-top: 40px;
-    padding-bottom: 40px;
-    width: 80%;
+    width: 100%;
 }
 
 .class-textBox {
     height: 40px;
-    width: 100%;
+    width: 90%;
     border-radius: 7px;
     border-color: white;
     background-color: #f0f0f0;

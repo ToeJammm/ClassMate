@@ -1,7 +1,7 @@
 import './requestList.css'
 import Request from './request';
 
-export default function requestList({requests, setRequestData}) {
+export default function requestList({requests, setRequestData, num, setNum}) {
   return (
     <div className="request-list">
       {requests.length === 0 ? (
@@ -10,7 +10,7 @@ export default function requestList({requests, setRequestData}) {
       ) : (
         requests.map((request, id) => (
           <div key={id} className="request-element">
-            <Request request={request} setRequestData={setRequestData} />
+            <Request request={request} setRequestData={setRequestData} num={num} setNum={setNum}/>
           </div>
         ))
       )}

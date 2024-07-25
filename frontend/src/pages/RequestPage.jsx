@@ -1,7 +1,11 @@
+import UserRequestForm from "../components/requestForm/userRequestForm"
 import "./RequestPage.css"
 
-export default function RequestPage() {
+
+export default function RequestPage () {
   return (
-    <div className="requestPage">RequestPage</div>
+    <div className="requestPage">
+      <UserRequestForm />
+    </div>
   )
 }

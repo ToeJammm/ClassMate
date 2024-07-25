@@ -34,7 +34,7 @@ export default function UniversityPage() {
             </NavLink>
               }         
         </div>
-        <div className="searchBar">
+        <div className="class-searchBar">
         <ClassSearchBar setResults={setResults} uniID={ result.UniID } />
         <ClassSearchResultsList results={results} Uni={result.UniID}/>
       </div>

@@ -21,7 +21,7 @@ export const SearchResultsList = ({ results, setUniID, setUniName, setResults}) 
   };
 
   return (
-    <div className="results-list">
+    <div className="uni-results-list">
       {results.map((result, id) => {
         return (
           <div
