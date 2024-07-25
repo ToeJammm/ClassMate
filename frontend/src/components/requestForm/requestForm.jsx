@@ -133,6 +133,26 @@ export default function RequestForm({ requestData }) {
     console.log("professorName: ", professorName);
   }, [professorID, professorName]);
 
+  //use effect for request data to change every variable in the request form
+  useEffect(() => {
+    console.log("requestData: ", requestData);
+    if (requestData !== undefined) {
+      setUniID(requestData.uniID);
+      setUniName(requestData.uniName);
+      setClassID(requestData.classID);
+      setClassName(requestData.className);
+      setClassNum(requestData.classNum);
+      setProfessorID(requestData.professorID);
+      setProfessorName(requestData.professorName);
+      setDifficulty(requestData.difficultyValue);
+      // setquality(requestData.qualityValue);
+      // setGrade(requestData.grade);
+      // setTermTaken(requestData.termTaken);
+      // setYear(requestData.termTaken.slice(-4));
+      setComment(requestData.comment);
+    }
+  }, [requestData]);
+
   return (
     <div className="request-container">
       {
