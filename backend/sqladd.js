@@ -298,32 +298,36 @@ export async function addUpvote(poolConnection, userID, commentID) {
 export async function addRequest(
     poolConnection,
     userName,
+    userEmail,
     uniID,
     classID,
+    classType,
+    classNumber,
     userID,
     professorID,
     universityName,
     professorName,
     className,
-    classNum,
     classTypeID,
     comment,
     termTaken,
     grade,
     difficultyValue,
-    qualityValue
+    qualityValue,
 ) {
     try {
         let resultSet = await poolConnection.request()
             .input('userName', sql.VarChar(15), userName)
+            .input('userEmail', sql.VarChar(15), userEmail)
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)
+            .input('classType', sql.Int, classType)
+            .input('classNumber', sql.Int, classNumber)
             .input('userID', sql.Int, userID)
             .input('professorID', sql.Int, professorID)
             .input('universityName', sql.VarChar(255), universityName)
             .input('professorName', sql.VarChar(255), professorName)
             .input('className', sql.VarChar(255), className)
-            .input('classNum', sql.VarChar(50), classNum)
             .input('classTypeID', sql.Int, classTypeID)
             .input('comment', sql.Text, comment)
             .input('termTaken', sql.VarChar(50), termTaken)

@@ -215,13 +215,17 @@ app.post('/addrequest', async(req, res) => {
         req.body.universityName,
         req.body.professorName,
         req.body.className,
-        req.body.classNum,
         req.body.classTypeID,
         req.body.comment,
         req.body.termTaken,
         req.body.grade,
         req.body.difficultyValue,
-        req.body.qualityValue);
+        req.body.qualityValue,
+        req.body.classType,
+        req.body.classNumber,
+        req.body.userName,
+        req.body.userEmail
+    );
     res.json(record);
 })
 

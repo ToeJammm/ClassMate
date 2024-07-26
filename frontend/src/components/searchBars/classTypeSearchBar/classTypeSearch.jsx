@@ -4,7 +4,7 @@ import "./classTypeSearch.css"
 
 const apiUrl = __API_BASE_URL__;
 
-export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClassTypeName, classTypeName }) => {
+export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClassType, classType }) => {
     const [input, setInput] = useState("");
 
     console.log("Running ClassTypeSearchBar");
@@ -25,8 +25,8 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
     const handleChange = (value) => {
         setInput(value);
         fetchData(value);
-        if (setClassTypeName) {
-            setClassTypeName(value);
+        if (setClassType) {
+            setClassType(value);
             setClassTypeID(-1);
         }
     }
@@ -37,7 +37,7 @@ export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClass
             <input className='classType-textBox'
                 type="text"
                 placeholder="Search Class Type..."
-                value={classTypeName}
+                value={classType}
                 onChange={(e) => handleChange(e.target.value)}
             />
         </div>

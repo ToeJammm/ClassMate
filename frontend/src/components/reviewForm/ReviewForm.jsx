@@ -156,10 +156,7 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
                   </option>
                 ))}
               </select>
-              
-              
             </div>
-
             <div className="ratingswrapper">
               <div style={{marginRight: '2px'}}>Semester*</div>
                <select className="dropdown" onChange={(e) => setTermTaken(e.target.value)}>

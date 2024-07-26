@@ -56,40 +56,13 @@ export default function AdminRequestForm({ requestData, num }) {
     console.log("request data: ", requestData);
   }, [uniID, uniName]);
 
-  const handleSubmit = () => {
-    const updatedTerm = termTaken + " " + year;
-
-    const data = {
-      difficultyValue,
-      qualityValue,
-      grade,
-      termTaken: updatedTerm,
-      comment,
-      classID,
-      userID,
-    };
-
-   
-
-    console.log("difficultyValue: " + difficultyValue);
-    console.log("utilityValue: " + qualityValue);
-    console.log("grade: " + grade);
-    console.log("comment: " + comment);
-    console.log("userID: " + userID);
-    console.log("classID: " + classID);
-    console.log("termTaken: " + data.termTaken);
-
-    axios
-      .post("${apiUrl}/addcomment", data) //post request for review
-      .then((response) => {
-        console.log("Post request successful", response.data);
-        FetchReviews(uni, classID);
-        window.location.reload(); // Reload the page after successful submission
-      })
-      .catch((error) => {
-        console.error("Error in post request", error);
-      });
-  };
+  const handleAccept = () => {
+    console.log("Accepting needs to be written")
+  }
+ 
+  const handleReject = () => {
+    console.log("Rejecting needs to be written")
+  }
 
  const handleChecked = () => {
       setIsChecked(!isChecked)
@@ -104,7 +77,7 @@ export default function AdminRequestForm({ requestData, num }) {
       handleChecked()
     }
   }
-      
+
 
   const numbers = [1, 2, 3, 4, 5];
   const grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
@@ -296,10 +269,10 @@ export default function AdminRequestForm({ requestData, num }) {
             ></textarea>
           </div>
           <div className="button-area">
-          <button className="accept-button" onClick={handleSubmit}>
+          <button className="accept-button" onClick={handleAccept}>
             Accept
           </button>
-          <button className="reject-button" onClick={handleSubmit}>
+          <button className="reject-button" onClick={handleReject}>
             Reject
           </button>
           </div>
