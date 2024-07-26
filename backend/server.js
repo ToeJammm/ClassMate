@@ -208,8 +208,12 @@ app.post('/addrequest', async(req, res) => {
     lastActivity = Date.now();
     let record = await addRequest(
         poolConnection,
+        req.body.userName,
+        req.body.userEmail,
         req.body.uniID,
         req.body.classID,
+        req.body.classType,
+        req.body.classNumber,
         req.body.userID,
         req.body.professorID,
         req.body.universityName,
@@ -221,10 +225,6 @@ app.post('/addrequest', async(req, res) => {
         req.body.grade,
         req.body.difficultyValue,
         req.body.qualityValue,
-        req.body.classType,
-        req.body.classNumber,
-        req.body.userName,
-        req.body.userEmail
     );
     res.json(record);
 })

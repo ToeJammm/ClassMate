@@ -144,7 +144,8 @@ export default function AdminRequestForm({ requestData, num }) {
       setGrade(requestData.Grade);
       setTermTaken(requestData.TermTaken);
       setComment(requestData.Comment);
-      setClassType(requestData.ClassType)
+      setClassType(requestData.ClassType);
+      setClassTypeID(requestData.ClassTypeID);
     }
   }, [requestData, num]);
 
