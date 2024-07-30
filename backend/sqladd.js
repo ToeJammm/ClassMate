@@ -316,30 +316,54 @@ export async function addRequest(
     qualityValue,
 ) {
     try {
+        console.log("Adding request to database: ");
+        console.log("uniID: " + uniID);
+        console.log("classID: " + classID);
+        console.log("classNumber: " + classNumber);
+        console.log("userID: " + userID);
+        console.log("professorID: " + professorID);
+        console.log("universityName: " + universityName);
+        console.log("professorName: " + professorName);
+        console.log("className: " + className);
+        console.log("classTypeID: " + classTypeID);
+        console.log("comment: " + comment);
+        console.log("termTaken: " + termTaken);
+        console.log("grade: " + grade);
+        console.log("difficultyValue: " + difficultyValue);
+        console.log("qualityValue: " + qualityValue);
+        console.log("userName: " + userName);
+        console.log("userEmail: " + userEmail);
+        console.log("classType: " + classType);
         let resultSet = await poolConnection.request()
-            .input('userName', sql.VarChar(15), userName)
-            .input('userEmail', sql.VarChar(15), userEmail)
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)
-            .input('classType', sql.Int, classType)
             .input('classNumber', sql.Int, classNumber)
             .input('userID', sql.Int, userID)
             .input('professorID', sql.Int, professorID)
-            .input('universityName', sql.VarChar(255), universityName)
-            .input('professorName', sql.VarChar(255), professorName)
-            .input('className', sql.VarChar(255), className)
+            .input('universityName', sql.VarChar, universityName)
+            .input('professorName', sql.VarChar, professorName)
+            .input('className', sql.VarChar, className)
             .input('classTypeID', sql.Int, classTypeID)
-            .input('comment', sql.Text, comment)
-            .input('termTaken', sql.VarChar(50), termTaken)
-            .input('grade', sql.VarChar(5), grade)
-            .input('difficultyValue', sql.Decimal(3, 2), difficultyValue)
-            .input('qualityValue', sql.Decimal(3, 2), qualityValue)
+            .input('comment', sql.VarChar, comment)
+            .input('termTaken', sql.VarChar, termTaken)
+            .input('grade', sql.VarChar, grade)
+            .input('difficultyValue', sql.Int, difficultyValue)
+            .input('qualityValue', sql.Int, qualityValue)
+            .input('userName', sql.VarChar, userName)
+            .input('userEmail', sql.VarChar, userEmail)
+            .input('classType', sql.VarChar, classType)
             .query(`
                 -- Begin a transaction to ensure atomicity
                 BEGIN TRANSACTION;
 
+                DECLARE @maxID INT;
+                SELECT @maxID = MAX(RequestID) FROM Requests;
+                SET @maxID = ISNULL(@maxID, 0) + 1;
+
+                SET IDENTITY_INSERT Requests ON;
+
                 -- Insert a new row into the UniversityFeedback table
-                INSERT INTO [dbo].[UniversityFeedback] (
+                INSERT INTO [dbo].[Requests] (
                     UniID,
                     ClassID,
                     UserID,
@@ -348,36 +372,46 @@ export async function addRequest(
                     UniversityName,
                     ProfessorName,
                     ClassName,
-                    ClassNum,
+                    ClassNumber,
                     ClassTypeID,
                     Comment,
                     TermTaken,
                     Grade,
                     DifficultyValue,
-                    QualityValue
+                    QualityValue,
+                    PostDate,
+                    UserEmail,
+                    UserName,
+                    ClassType
                 ) VALUES (
                     @uniID,
                     @classID,
                     @userID,
-                    @requestID,
+                    @maxID,
                     @professorID,
                     @universityName,
                     @professorName,
                     @className,
-                    @classNum,
+                    @classNumber,
                     @classTypeID,
                     @comment,
                     @termTaken,
                     @grade,
                     @difficultyValue,
-                    @qualityValue
+                    @qualityValue,
+                    CURRENT_TIMESTAMP,
+                    @userEmail,
+                    @userName,
+                    @classType
                 );
+
+                SET IDENTITY_INSERT Requests OFF;
 
                 -- Commit the transaction
                 COMMIT;
 
                 -- Select the details of the newly added feedback
-                SELECT * FROM [dbo].[UniversityFeedback] 
+                SELECT * FROM [dbo].[Requests] 
                 WHERE userID = @userID AND comment = @comment;
             `);
 

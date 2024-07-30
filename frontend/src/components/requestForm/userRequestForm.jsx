@@ -58,50 +58,49 @@ export default function AdminRequestForm({ requestData, num }) {
   // }, [uniID, uniName]);
 
   const handleSubmit = async () => {
-    setTermTaken(termTaken + " " + year)
+    //Idk if this function works. I think it does
+    setTermTaken(termTaken.split(" ")[0] + " " + year)
     console.log("submitting data to requests")
-    console.log(   "all data",     
-      uniID, 
-      classID, 
-      userID, 
-      professorID,
-      professorName,
-      uniName,
-      className,
-      classTypeID,
-      comment,
-      termTaken,
-      grade,
-      difficultyValue,
-      qualityValue,
-      userEmail,
-      classType,
-      classNumber,
-      userName
-
-    )
+    console.log("uniID: ", uniID);
+    console.log("classID: ", classID);
+    console.log("userID: ", userID);
+    console.log("professorID: ", professorID);
+    console.log("professorName: ", professorName);
+    console.log("uniName: ", uniName);
+    console.log("className: ", className);
+    console.log("classTypeID: ", classTypeID);
+    console.log("comment: ", comment);
+    console.log("termTaken: ", termTaken);
+    console.log("grade: ", grade);
+    console.log("difficultyValue: ", difficultyValue);
+    console.log("qualityValue: ", qualityValue);
+    console.log("userEmail: ", userEmail);
+    console.log("classType: ", classType);
+    console.log("classNumber: ", classNumber);
+    console.log("userName: ", userName);    
     // console.log("username: ", userName)
     try{ 
       const response = await axios.post(`${apiUrl}/addrequest`, {
-        userName,
-        userEmail,
-        uniID,
-        classID,
-        classType,
-        classNumber,
-        userID,
-        professorID,
-        universityName,
-        professorName,
-        className,
-        classTypeID,
-        comment,
-        termTaken,
-        grade,
-        difficultyValue,
-        qualityValue,
-      })
-      return response.data
+      uniID: uniID,
+      classID: classID,
+      userID: userID,
+      professorID: professorID,
+      universityName: uniName,
+      className: className,
+      classTypeID: classTypeID,
+      comment: comment,
+      termTaken: termTaken,
+      grade: grade,
+      difficultyValue: difficultyValue,
+      qualityValue: qualityValue,
+      userEmail: userEmail,
+      classType: classType,
+      classNumber: classNumber,
+      userName: userName
+      }
+    );
+    console.log("Response:", response);
+    return response.data
 
     } catch (error) {
       console.log(error)
@@ -215,7 +214,7 @@ export default function AdminRequestForm({ requestData, num }) {
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNumber={setClassNumber}
+                setClassNum={setClassNumber}
                 classFullName={classFullName}
               />
               <ClassSearchResultsList2
@@ -224,7 +223,7 @@ export default function AdminRequestForm({ requestData, num }) {
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNumber={setClassNumber}
+                setClassNum={setClassNumber}
                 setClassFullName={setClassFullName}
               />
               <NewAddonDisplayPrompt ID={classID} />
