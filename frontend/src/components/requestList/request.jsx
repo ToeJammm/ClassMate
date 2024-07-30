@@ -9,6 +9,7 @@ export default function Request({ request, setRequestData, num, setNum }) {
       //on click...set requestData object
       setNum(num++)
     setRequestData(request);
+    console.log(request)
   }
 
 

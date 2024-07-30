@@ -147,7 +147,7 @@ export default function AdminRequestForm({ requestData, num }) {
       setClassType(requestData.ClassType);
       setClassTypeID(requestData.ClassTypeID);
     }
-  }, [requestData, num]);
+  }, [requestData, num]); //num was added to update everytime a list item was clicked 
 
   return (
     
@@ -179,8 +179,8 @@ export default function AdminRequestForm({ requestData, num }) {
                 setResults={setClassTypeResults}
                 uniID={uniID}
                 setClassTypeID={setClassTypeID}
-                setClassTypeName={setClassType}
-                classTypeName={classType}
+                setClassType={setClassType}
+                classType={classType}
               />
               <ClassTypeResultsList
                 setResults={setClassTypeResults}

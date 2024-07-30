@@ -107,10 +107,6 @@ const Login = async () => {
         loginEmail,
         loginPassword,
     );
-    
-
-    
-
 } catch (error) {
     console.log(error.message);
     setError(error.message);

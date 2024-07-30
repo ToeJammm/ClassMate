@@ -12,6 +12,7 @@ import { ProfessorResultsList } from "../searchBars/professorSearchBar/professor
 import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSearch";
 import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
 
+
 const apiUrl = __API_BASE_URL__;
 
 export default function AdminRequestForm({ requestData, num }) {
@@ -101,12 +102,15 @@ export default function AdminRequestForm({ requestData, num }) {
       }
     );
     console.log("Response:", response);
+    navigate("/");
     return response.data
 
     } catch (error) {
       console.log("ERROR 1")
       console.log(error)
     }
+
+
     };
 
 
