@@ -220,7 +220,7 @@ export default function AdminRequestForm({ requestData, num }) {
               />
               <ClassSearchResultsList2
                 results={classResults}
-                setResults={setClassResults}
+                setClassResults={setClassResults}
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}

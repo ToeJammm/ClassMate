@@ -5,7 +5,7 @@ import { ClassSearchResult } from "./classSearchResult";
 import { useNavigate } from "react-router-dom";
 
 
-export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassName, setClassNum, setClassFullName, setResults }) => {
+export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassName, setClassNumber, setClassFullName, setClassResults }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (result) => {
@@ -13,9 +13,9 @@ export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassNa
     if (setClassID) { //For request form
       setClassID(result.ClassID);
       setClassName(result.ClassName);
-      setClassNum(result.ClassNum);
+      setClassNumber(result.ClassNum);
       setClassFullName(result.FullName)
-      setResults([])
+      setClassResults([])
     }
 
     // Navigate to the UniversityPage with the selected result as state
