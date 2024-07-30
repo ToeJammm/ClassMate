@@ -417,6 +417,7 @@ export async function addRequest(
 
         return resultSet.recordset;
     } catch (err) {
+        console.log("ERRORRRRR")
         console.error(err.message);
         return null;
     }

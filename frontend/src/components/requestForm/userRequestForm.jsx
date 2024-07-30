@@ -30,8 +30,8 @@ export default function AdminRequestForm({ requestData, num }) {
   const [classTypeResults, setClassTypeResults] = useState([]);
   const [classTypeID, setClassTypeID] = useState(-1);
   const [classType, setClassType] = useState("");
-  const [difficultyValue, setDifficulty] = useState(0);
-  const [qualityValue, setquality] = useState(0);
+  const [difficultyValue, setDifficulty] = useState(1);
+  const [qualityValue, setquality] = useState(1);
   const [grade, setGrade] = useState("A+");
   const [termTaken, setTermTaken] = useState("Fall");
   const [year, setYear] = useState("2024");
@@ -58,7 +58,7 @@ export default function AdminRequestForm({ requestData, num }) {
   // }, [uniID, uniName]);
 
   const handleSubmit = async () => {
-    //Idk if this function works. I think it does
+
     setTermTaken(termTaken.split(" ")[0] + " " + year)
     console.log("submitting data to requests")
     console.log("uniID: ", uniID);
@@ -78,13 +78,14 @@ export default function AdminRequestForm({ requestData, num }) {
     console.log("classType: ", classType);
     console.log("classNumber: ", classNumber);
     console.log("userName: ", userName);    
-    // console.log("username: ", userName)
+  
     try{ 
       const response = await axios.post(`${apiUrl}/addrequest`, {
       uniID: uniID,
       classID: classID,
       userID: userID,
       professorID: professorID,
+      professorName: professorName,
       universityName: uniName,
       className: className,
       classTypeID: classTypeID,
@@ -103,6 +104,7 @@ export default function AdminRequestForm({ requestData, num }) {
     return response.data
 
     } catch (error) {
+      console.log("ERROR 1")
       console.log(error)
     }
     };
@@ -214,7 +216,7 @@ export default function AdminRequestForm({ requestData, num }) {
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNum={setClassNumber}
+                setClassNumber={setClassNumber}
                 classFullName={classFullName}
               />
               <ClassSearchResultsList2
@@ -223,7 +225,9 @@ export default function AdminRequestForm({ requestData, num }) {
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNum={setClassNumber}
+                setClassNumber={setClassNumber}
+                setClassType={setClassType}
+                setClassTypeID={setClassTypeID}
                 setClassFullName={setClassFullName}
               />
               <NewAddonDisplayPrompt ID={classID} />

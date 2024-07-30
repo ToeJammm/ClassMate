@@ -5,7 +5,7 @@ import { ClassSearchResult } from "./classSearchResult";
 import { useNavigate } from "react-router-dom";
 
 
-export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassName, setClassNumber, setClassFullName, setClassResults }) => {
+export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassTypeID, setClassName, setClassNumber, setClassFullName, setClassType, setClassResults }) => {
   const navigate = useNavigate();
 
   const handleItemClick = (result) => {
@@ -14,7 +14,9 @@ export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassNa
       setClassID(result.ClassID);
       setClassName(result.ClassName);
       setClassNumber(result.ClassNum);
-      setClassFullName(result.FullName)
+      setClassFullName(result.FullName);
+      setClassType(result.ClassType);
+      setClassTypeID(result.ClassTypeID);
       setClassResults([])
     }
 

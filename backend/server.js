@@ -242,7 +242,7 @@ app.get('/requests', async(req, res) => {
         req.body.universityName,
         req.body.professorName,
         req.body.className,
-        req.body.classNum,
+        req.body.classNumber,
         req.body.classTypeID,
         req.body.comment,
         req.body.termTaken,

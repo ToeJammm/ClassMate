@@ -84,7 +84,7 @@ export async function getAllClassesByUni(poolConnection, uniID) {
     try {
         console.log("requesting all classes at university " + uniID);
         let resultSet = await poolConnection.request().query(`
-        SELECT c.ClassID, ct.ClassType, c.ClassNum, c.ClassName, CONCAT(ct.ClassType, ' ', c.ClassNum, ': ', c.ClassName) AS FullName
+        SELECT c.ClassID, ct.ClassType, c.ClassNum, c.ClassName, c.ClassTypeID, CONCAT(ct.ClassType, ' ', c.ClassNum, ': ', c.ClassName) AS FullName
         FROM [dbo].[Class] c
         INNER JOIN [dbo].[ClassType] ct ON c.ClassTypeID = ct.ClassTypeID
         WHERE ct.UniID = ${uniID}
