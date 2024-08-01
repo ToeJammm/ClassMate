@@ -256,7 +256,7 @@ app.get('/requests', async(req, res) => {
 app.delete('/removerequest', async(req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
-    let record = await deleteUser(poolConnection, req.body.requestID);
+    let record = await deleteRequest(poolConnection, req.body.requestID);
     res.json(record);
 })
 

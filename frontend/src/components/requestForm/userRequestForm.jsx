@@ -11,6 +11,7 @@ import { ClassTypeResultsList } from "../searchBars/classTypeSearchBar/classType
 import { ProfessorResultsList } from "../searchBars/professorSearchBar/professorResultsList";
 import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSearch";
 import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
+import { useNavigate } from "react-router-dom";
 
 
 const apiUrl = __API_BASE_URL__;
@@ -41,7 +42,7 @@ export default function AdminRequestForm({ requestData, num }) {
   const [classFullName, setClassFullName] = useState("");
   const [userEmail, setUserEmail] = useState("")
   const [userName, setUserName] = useState("")
-
+  const navigate = useNavigate();
   useEffect(() => {
     if (localStorage.getItem("userID") !== null) {
       setUserID(localStorage.getItem("userID"));

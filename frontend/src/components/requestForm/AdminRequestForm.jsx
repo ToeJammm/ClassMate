@@ -13,9 +13,10 @@ import { ProfessorResultsList } from "../searchBars/professorSearchBar/professor
 import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSearch";
 import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
 
+
 const apiUrl = __API_BASE_URL__;
 
-export default function AdminRequestForm({ requestData, num }) {
+export default function AdminRequestForm({ requestData, num, setJustRejected }) {
   const [showClassPopup, setShowClassPopup] = useState(false);
 
   const [uniID, setUniID] = useState(-1);
@@ -40,7 +41,6 @@ export default function AdminRequestForm({ requestData, num }) {
   const [isChecked, setIsChecked] = useState(false)
   const [classType, setClassType] = useState("")
   const [classNumber, setClassNumber] = useState("")
-  // const [clickedOnUni, setClickedOnUni] = useState("")
 
   useEffect(() => {
     if (localStorage.getItem("userID") !== null) {
@@ -61,8 +61,19 @@ export default function AdminRequestForm({ requestData, num }) {
   }
  
   const handleReject = () => {
-    console.log("Rejecting needs to be written")
-  }
+    axios.delete(`${apiUrl}/removerequest`, {
+      data: { requestID: requestData.RequestID }
+    })
+    .then(response => {
+      // Handle the response if needed
+      console.log('Request removed:', response.data);
+      setJustRejected(!justRejected) //supposed to update request list, might just refresh the page
+    })
+    .catch(error => {
+      // Handle the error if needed
+      console.error('Error removing request:', error);
+    });
+  };
 
  const handleChecked = () => {
       setIsChecked(!isChecked)

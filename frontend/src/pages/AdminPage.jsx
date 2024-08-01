@@ -11,6 +11,7 @@ export default function AdminPage() {
   const [num, setNum] = useState(0)
   const location = useLocation();
   const navigate = useNavigate();
+  const [justRejected, setJustRejected] = useState(1)
 
   //Log request data
   useEffect(() => {
@@ -18,13 +19,14 @@ export default function AdminPage() {
   }, [requests]);
 
   useEffect(() => {
+    console.log("fetching requests")
     const fetchData = async () => {
       const requestData = await FetchRequests(); // define this
       setRequests(requestData);
       console.log(requestData);
     };
     fetchData();
-  }, []);
+  }, [justRejected]);
 
   return (
     <div className="admin-wrapper">
@@ -40,10 +42,10 @@ export default function AdminPage() {
         
         <div className="lowerPart">
           
-            <AdminRequestForm requestData={requestData} num={num}/>
+            <AdminRequestForm requestData={requestData} num={num} setJustRejected={setJustRejected} justRejected={justRejected}/>
           
           <div className="requests">
-            <RequestList requests={requests} setRequestData={setRequestData} setNum={setNum} num={num}/>
+            <RequestList requests={requests} setRequestData={setRequestData} setNum={setNum} num={num} />
           </div>
         </div>
       </div>
