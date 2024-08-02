@@ -1,7 +1,10 @@
 import './requestList.css'
 import Request from './request';
+import { useEffect } from 'react';
 
-export default function requestList({requests, setRequestData, num, setNum}) {
+export default function requestList({requests, setRequestData, num, setNum, toRemove, setRequests, setToRemove}) {
+
+
   return (
     <div className="request-list">
       {requests.length === 0 ? (

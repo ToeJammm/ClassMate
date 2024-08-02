@@ -10,6 +10,7 @@ import { SearchResultsList } from "../components/searchBars/uniSearchBar/uniSear
 function Home() {
 
   const [results, setResults] = useState([]);
+  const errorMessage = "(Must be Logged In to Make a Request)"
 
   return (
     <div className="home-container">

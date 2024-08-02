@@ -11,22 +11,27 @@ export default function AdminPage() {
   const [num, setNum] = useState(0)
   const location = useLocation();
   const navigate = useNavigate();
-  const [justRejected, setJustRejected] = useState(1)
-
-  //Log request data
-  useEffect(() => {
-    console.log("requestData: ", requests);
-  }, [requests]);
+  const [toRemove, setToRemove] = useState(-1)
 
   useEffect(() => {
-    console.log("fetching requests")
     const fetchData = async () => {
       const requestData = await FetchRequests(); // define this
       setRequests(requestData);
       console.log(requestData);
     };
     fetchData();
-  }, [justRejected]);
+  }, []);
+
+  useEffect(() => {
+    if (toRemove !== -1) {
+      // Remove the request with the given ID from the requests list
+      const updatedRequests = requests.filter(request => request.RequestID !== toRemove);
+      setRequests(updatedRequests);
+      setToRemove(-1)
+    }
+  }, [toRemove]);
+
+
 
   return (
     <div className="admin-wrapper">
@@ -42,10 +47,10 @@ export default function AdminPage() {
         
         <div className="lowerPart">
           
-            <AdminRequestForm requestData={requestData} num={num} setJustRejected={setJustRejected} justRejected={justRejected}/>
+            <AdminRequestForm requestData={requestData} num={num} setToRemove={setToRemove} />
           
           <div className="requests">
-            <RequestList requests={requests} setRequestData={setRequestData} setNum={setNum} num={num} />
+            <RequestList requests={requests} setToRemove={setToRemove} setRequests={setRequests} setRequestData={setRequestData} setNum={setNum} toRemove={toRemove} num={num} />
           </div>
         </div>
       </div>
@@ -54,7 +59,3 @@ export default function AdminPage() {
 }
 
 
-
-{/* <div className="welcome">
-          Welcome Admin, {localStorage.getItem("userName")}
-        </div> */}

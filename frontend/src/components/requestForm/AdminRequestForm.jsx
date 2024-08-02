@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import axios from "axios";
 import "./AdminRequestForm.css";
-import { FetchReviews } from "../../API/reviewsAPI";
 import { SearchBar } from "../searchBars/uniSearchBar/universitySearch";
 import { SearchResultsList } from "../searchBars/uniSearchBar/uniSearchResultsList";
 import { ClassSearchBar } from "../searchBars/classSearchBar/classSearchBar";
@@ -12,13 +10,14 @@ import { ClassTypeResultsList } from "../searchBars/classTypeSearchBar/classType
 import { ProfessorResultsList } from "../searchBars/professorSearchBar/professorResultsList";
 import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSearch";
 import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
+import Review from "../reviewList/review";
 
 
 const apiUrl = __API_BASE_URL__;
 
-export default function AdminRequestForm({ requestData, num, setJustRejected }) {
-  const [showClassPopup, setShowClassPopup] = useState(false);
+export default function AdminRequestForm({ requestData, num, setToRemove }) {
 
+  const [showClassPopup, setShowClassPopup] = useState(false)
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
   const [classID, setClassID] = useState(-1);
@@ -56,18 +55,33 @@ export default function AdminRequestForm({ requestData, num, setJustRejected }) 
     console.log("request data: ", requestData);
   }, [uniID, uniName]);
 
-  const handleAccept = () => {
+  const handleAccept = (id) => {
     console.log("Accepting needs to be written")
+    if(uniID == -1) {
+      //add new uni, new class, and new prof
+      setToRemove(id)
+    } else if (classID == -1 && professorID == -1) {
+      //add new class and prof under uniID
+      setToRemove(id)
+    } else if (classID == -1) {
+      //only add new class
+      setToRemove(id)
+    } else if (professorID == -1) {
+      //only add prof
+      setToRemove(id)
+    }
+
+    //then add comment at the endwads aw
   }
  
-  const handleReject = () => {
+  const handleReject = (id) => {
     axios.delete(`${apiUrl}/removerequest`, {
       data: { requestID: requestData.RequestID }
     })
     .then(response => {
       // Handle the response if needed
       console.log('Request removed:', response.data);
-      setJustRejected(!justRejected) //supposed to update request list, might just refresh the page
+      setToRemove(id)
     })
     .catch(error => {
       // Handle the error if needed
@@ -284,7 +298,7 @@ export default function AdminRequestForm({ requestData, num, setJustRejected }) 
           <button className="accept-button" onClick={handleAccept}>
             Accept
           </button>
-          <button className="reject-button" onClick={handleReject}>
+          <button className="reject-button" onClick={() => handleReject(requestData.RequestID)}>
             Reject
           </button>
           </div>
