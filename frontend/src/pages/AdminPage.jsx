@@ -7,7 +7,7 @@ import { FetchRequests } from "../API/reviewsAPI";
 
 export default function AdminPage() {
   const [requests, setRequests] = useState([]);
-  const [requestData, setRequestData] = useState([])
+  const [requestData, setRequestData] = useState("")
   const [num, setNum] = useState(0)
   const location = useLocation();
   const navigate = useNavigate();

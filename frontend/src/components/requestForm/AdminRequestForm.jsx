@@ -17,7 +17,6 @@ const apiUrl = __API_BASE_URL__;
 
 export default function AdminRequestForm({ requestData, num, setToRemove }) {
 
-  const [showClassPopup, setShowClassPopup] = useState(false)
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
   const [classID, setClassID] = useState(-1);
@@ -41,37 +40,42 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
   const [classType, setClassType] = useState("")
   const [classNumber, setClassNumber] = useState("")
 
+
+
   useEffect(() => {
     if (localStorage.getItem("userID") !== null) {
       setUserID(localStorage.getItem("userID"));
-      console.log("set UserID to", userID);
+      // console.log("set UserID to", userID);
     } else {
       console.log("user ID " + localStorage.getItem("userID"));
       console.log("user is not logged in, won't be able to make a post");
     }
   }, []);
 
-  useEffect(() => {
-    console.log("request data: ", requestData);
-  }, [uniID, uniName]);
+
+  // useEffect(() => {
+  //   console.log("request data: ", requestData);
+  // }, [uniID, uniName]);
 
   const handleAccept = (id) => {
-    console.log("Accepting needs to be written")
+    console.log("classID:", requestData.ClassID, "UniID:", requestData.UniID, "prof ID:", requestData.ProfessorID)
+
     if(uniID == -1) {
-      //add new uni, new class, and new prof
-      setToRemove(id)
+      console.log("adding a new uni, class, and prof")
+      // setToRemove(id)
     } else if (classID == -1 && professorID == -1) {
-      //add new class and prof under uniID
-      setToRemove(id)
+      console.log("adding a new class and prof")
+      // setToRemove(id)
     } else if (classID == -1) {
-      //only add new class
-      setToRemove(id)
+      console.log("adding a new class")
+      // setToRemove(id)
     } else if (professorID == -1) {
-      //only add prof
-      setToRemove(id)
+      console.log("adding a new prof")
+      // setToRemove(id)
     }
 
     //then add comment at the endwads aw
+    console.log("adding review too")
   }
  
   const handleReject = (id) => {
@@ -89,20 +93,18 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
     });
   };
 
- const handleChecked = () => {
-      setIsChecked(!isChecked)
-      classPopup(!showClassPopup)
-    }
+const handleClassID = (classID) => {
+console.log("classID is", requestData.ClassID)
+if(requestData.ClassID == -1) {
+  setIsChecked(true)
+} else {
+  setIsChecked(false)
+}
+}
 
-  const handleclassIDNeg = () => {
-    if(requestData.ClassID == -1) {
-      classPopup(true)
-      setIsChecked(true)
-    } else {
-      handleChecked()
-    }
-  }
-
+useEffect(() => {
+  handleClassID()
+}, [requestData])
 
   const numbers = [1, 2, 3, 4, 5];
   const grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
@@ -114,49 +116,45 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
     return years;
   };
 
-  const classPopup = (show) => {
-    console.log("classpopup called");
-    setShowClassPopup(show);
-    if(show == false) {
-      setClassID(-1);
+  useEffect(() => { //need to be explained from ryan
+        if(isChecked == false) {
       setClassName("");
       setClassNumber("");
       setClassTypeID(-1);
       setClassType("");
       setClassResults([]);
       setClassTypeResults([]);
-      setClassFullName("");
       }
-  };
+  }, [isChecked])
 
-  // Call the function to get the array of last 10 years
-  const lastTenYears = getLastTenYears();
+
 
   //Logging the values of everything -- IDs will be -1 if the user is adding a new item
-  useEffect(() => {
-    console.log("classTypeID: ", classTypeID);
-    console.log("classTypeName: ", classType);
-  }, [classTypeID, classType]);
+  // useEffect(() => {
+  //   console.log("classTypeID: ", classTypeID);
+  //   console.log("classTypeName: ", classType);
+  // }, [classTypeID, classType]);
 
-  useEffect(() => {
-    console.log("classID: ", classID);
-    console.log("className: ", className);
-    console.log("fullName: ", classFullName);
-  }, [classID, className]);
+  // useEffect(() => {
+  //   console.log("classID: ", classID);
+  //   console.log("className: ", className);
+  //   console.log("fullName: ", classFullName);
+  // }, [classID, className]);
 
-  useEffect(() => {
-    console.log("professorID: ", professorID);
-    console.log("professorName: ", professorName);
-  }, [professorID, professorName]);
+  // useEffect(() => {
+  //   console.log("professorID: ", professorID);
+  //   console.log("professorName: ", professorName);
+  // }, [professorID, professorName]);
 
   //use effect for request data to change every variable in the request form
+
   useEffect(() => {
     if(requestData.ClassID === -1) {
-      handleclassIDNeg()
+      handleClassID()
       console.log("class does not exist")
     }
     console.log("requestData: ", requestData);
-    if (requestData !== undefined) {
+    if (requestData != "") {
       setUniID(requestData.UniID);
       setUniName(requestData.UniversityName);
       setClassID(requestData.ClassID);
@@ -171,8 +169,14 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
       setComment(requestData.Comment);
       setClassType(requestData.ClassType);
       setClassTypeID(requestData.ClassTypeID);
+      setClassFullName(requestData.ClassType + " " + requestData.ClassNumber + ": " + requestData.ClassName)
+      setYear(requestData.Year)
     }
   }, [requestData, num]); //num was added to update everytime a list item was clicked 
+
+  useEffect(() => {
+    console.log("full name: ", classFullName)
+  }, [classFullName])
 
   return (
     
@@ -194,11 +198,11 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
           <div className="checkBox-wrapper">
             <input type="checkbox" 
             checked={isChecked} 
-            onClick={handleChecked}></input>
+            onClick={(() => {setIsChecked(!isChecked)})}></input>
             <p>Check Box If Class Does Not Exist</p>
           </div>
 
-          {showClassPopup ? (
+          {isChecked ? (
             <div className="class-inputs-popup">
               <ClassTypeSearchBar
                 setResults={setClassTypeResults}
@@ -237,17 +241,18 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNum={setClassNumber}
+                setClassNumber={setClassNumber}
                 classFullName={classFullName}
               />
               <ClassSearchResultsList2
                 results={classResults}
-                setResults={setClassResults}
+                setClassResults={setClassResults}
                 uniID={uniID}
                 setClassID={setClassID}
                 setClassName={setClassName}
-                setClassNum={setClassNumber}
+                setClassNumber={setClassNumber}
                 setClassFullName={setClassFullName}
+                setClassType={setClassType}
               />
               <NewAddonDisplayPrompt ID={classID} />
             </div>
@@ -284,7 +289,7 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
           </div>
           <div className="specificInfo">
               <div>Taken: </div>
-              <div> {termTaken ? termTaken : ""}</div>
+              <div> {termTaken + " " + year ? termTaken + " " + year  : ""}</div>
           </div>
             <textarea
               className="adminRequestCommentBox"

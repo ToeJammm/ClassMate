@@ -10,7 +10,7 @@ const apiUrl = __API_BASE_URL__;
 export const NewAddonDisplayPrompt = ({ ID, name, notHomePage }) => {
     const [display, setDisplay] = useState(false);
     useEffect(() => {
-        console.log("New ID =", ID);
+        // console.log("New ID =", ID);
         if (ID === -1 && notHomePage) {
             setDisplay(true);
         } else {

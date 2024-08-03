@@ -314,6 +314,7 @@ export async function addRequest(
     grade,
     difficultyValue,
     qualityValue,
+    year
 ) {
     try {
         console.log("Adding request to database: ");
@@ -334,6 +335,7 @@ export async function addRequest(
         console.log("userName: " + userName);
         console.log("userEmail: " + userEmail);
         console.log("classType: " + classType);
+        console.log("classType: " + year);
         let resultSet = await poolConnection.request()
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)
@@ -352,6 +354,7 @@ export async function addRequest(
             .input('userName', sql.VarChar, userName)
             .input('userEmail', sql.VarChar, userEmail)
             .input('classType', sql.VarChar, classType)
+            .input('year', sql.Int, year)
             .query(`
                 -- Begin a transaction to ensure atomicity
                 BEGIN TRANSACTION;
@@ -382,7 +385,8 @@ export async function addRequest(
                     PostDate,
                     UserEmail,
                     UserName,
-                    ClassType
+                    ClassType,
+                    Year
                 ) VALUES (
                     @uniID,
                     @classID,
@@ -402,7 +406,8 @@ export async function addRequest(
                     CURRENT_TIMESTAMP,
                     @userEmail,
                     @userName,
-                    @classType
+                    @classType,
+                    @year
                 );
 
                 SET IDENTITY_INSERT Requests OFF;

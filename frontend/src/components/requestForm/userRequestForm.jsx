@@ -36,7 +36,7 @@ export default function AdminRequestForm({ requestData, num }) {
   const [qualityValue, setquality] = useState(1);
   const [grade, setGrade] = useState("A+");
   const [termTaken, setTermTaken] = useState("Fall");
-  const [year, setYear] = useState("2024");
+  const [year, setYear] = useState(new Date().getFullYear());
   const [comment, setComment] = useState("");
   const [userID, setUserID] = useState("");
   const [classFullName, setClassFullName] = useState("");
@@ -79,7 +79,8 @@ export default function AdminRequestForm({ requestData, num }) {
     console.log("userEmail: ", userEmail);
     console.log("classType: ", classType);
     console.log("classNumber: ", classNumber);
-    console.log("userName: ", userName);    
+    console.log("userName: ", userName);
+    console.log("year: ", year)    
   
     try{ 
       const response = await axios.post(`${apiUrl}/addrequest`, {
@@ -99,7 +100,8 @@ export default function AdminRequestForm({ requestData, num }) {
       userEmail: userEmail,
       classType: classType,
       classNumber: classNumber,
-      userName: userName
+      userName: userName,
+      year: year
       }
     );
     console.log("Response:", response);
@@ -110,8 +112,6 @@ export default function AdminRequestForm({ requestData, num }) {
       console.log("ERROR 1")
       console.log(error)
     }
-
-
     };
 
 
@@ -181,7 +181,7 @@ export default function AdminRequestForm({ requestData, num }) {
 
           <div className="checkBox-wrapper">
             <input type="checkbox" onChange={classPopup}></input>
-            <p>Check Box If Class Does Not Exist</p>
+            <p>Check Box If Class Does Not Exist In Search</p>
           </div>
 
           {showClassPopup ? (

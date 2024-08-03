@@ -225,6 +225,7 @@ app.post('/addrequest', async(req, res) => {
         req.body.grade,
         req.body.difficultyValue,
         req.body.qualityValue,
+        req.body.year
     );
     res.json(record);
 })
@@ -248,7 +249,8 @@ app.get('/requests', async(req, res) => {
         req.body.termTaken,
         req.body.grade,
         req.body.difficultyValue,
-        req.body.qualityValue
+        req.body.qualityValue,
+        req.body.year
     )
     res.json(record)
 })
