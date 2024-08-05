@@ -14,8 +14,10 @@
     flex-direction: column;
     z-index: 2;
     position: relative;
-    margin-top: 40px;
+    margin-top: 15px;
     width: 80vw;
+    justify-content: center;
+    align-items: center;
 }
 
 .request-button{
