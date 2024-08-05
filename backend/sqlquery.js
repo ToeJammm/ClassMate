@@ -79,6 +79,38 @@ export async function getClassRatings(poolConnection, classID, uniID) {
     }
 }
 
+export async function getUserClassRatings(poolConnection, classID, uniID, userID) {
+    try {
+        console.log("requesting class info for classID " + classID + " at university " + uniID);
+        let resultSet = await poolConnection.request().query(`
+        WITH 
+            fullclassname (ClassID, ClassType, ClassName, ClassNum, UniName, UniID) AS (
+                SELECT c.ClassID, ct.ClassType, c.ClassName, c.ClassNum, u.UniName, u.UniID
+                FROM ClassType ct
+                LEFT JOIN Class c ON c.ClassTypeID = ct.ClassTypeID
+                LEFT JOIN University u ON ct.UniID = u.UniID
+            ),
+            fulldiffname (DifficultyID, DifficultyValue, QualityValue, ProfessorName, UserID, ClassID, Email) AS (
+                SELECT d.DifficultyID, d.DifficultyValue, d.QualityValue, p.Name, u.UserID, d.ClassID, u.Email
+                FROM Difficulty d
+                LEFT JOIN Professors p ON d.ProfessorID = p.ProfessorID
+                LEFT JOIN Users u ON d.UserID = u.UserID
+            )
+
+        SELECT d.DifficultyValue, d.QualityValue
+        FROM fulldiffname d
+        LEFT JOIN Comments c ON d.DifficultyID = c.DifficultyID
+        LEFT JOIN fullclassname cl ON d.ClassID = cl.ClassID
+        WHERE d.ClassID = ${classID} AND cl.UniID = '${uniID}' AND c.UserID = ${userID}
+        ORDER BY c.PostDate DESC
+        `);
+        return resultSet.recordset;
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}
+
 // Name says it all
 export async function getAllClassesByUni(poolConnection, uniID) {
     try {

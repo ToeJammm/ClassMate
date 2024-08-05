@@ -203,6 +203,18 @@ app.get('/activity', async (req, res) => {
     res.json({'Time inactive (minutes)': ((Date.now() - lastActivity) / 1000 / 60).toFixed(3)});
 });
 
+app.get('/getUserClassRatings', async(req, res) => {
+    await reopenConnection(poolConnection);
+    lastActivity = Date.now();
+    let record = await getUserClassRatings(
+        poolConnection,
+        req.body.classID,
+        req.body.uniID,
+        req.body.userID,
+    )
+    res.json(record)
+});
+
 app.post('/addrequest', async(req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
