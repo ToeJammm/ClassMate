@@ -47,6 +47,14 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
     console.log("user is not logged in, won't be able to make a post")
   }
   }, [])
+
+  const editComment = () => {
+    console.log("editing comment");
+  }
+
+  const deleteComment = () => {
+    console.log("deleting comment");
+  }
   
   const handleSubmit = () => {
     const updatedTerm = termTaken + " " + year;
@@ -70,6 +78,8 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
     console.log( "userID: " + userID);
     console.log("classID: " + classID);
     console.log("termTaken: " + data.termTaken);
+
+    console.log("data: ", data);
 
     axios.post("${apiUrl}/addcomment", data) //post request for review
       .then(response => {
@@ -111,8 +121,16 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
   return (
     <div className="popup-container">
       {!isOpen && (
-        <div className="addReview-button" onClick={togglePopup}>
-          Add A Review
+        <div className ="bottom-buttons">
+          <div className="addReview-button" onClick={togglePopup}>
+            Add A Review
+          </div>
+          <div className="edit-button" onClick={editComment}>
+            Edit
+          </div>
+          <div className="delete-button" onClick={deleteComment}>
+            Delete
+          </div>
         </div>
       )}
       {isOpen && (
