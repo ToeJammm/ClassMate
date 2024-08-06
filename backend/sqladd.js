@@ -334,7 +334,7 @@ export async function addRequest(
         console.log("userName: " + userName);
         console.log("userEmail: " + userEmail);
         console.log("classType: " + classType);
-        console.log("classType: " + year);
+        console.log("year: " + year);
         let resultSet = await poolConnection.request()
             .input('uniID', sql.Int, uniID)
             .input('classID', sql.Int, classID)

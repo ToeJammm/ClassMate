@@ -58,31 +58,137 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
   // }, [uniID, uniName]);
 
   const handleAccept = (id) => {
-    console.log("classID:", requestData.ClassID, "UniID:", requestData.UniID, "prof ID:", requestData.ProfessorID)
+    console.log("classID:", requestData.ClassID, "UniID:", requestData.UniID, "prof ID:", requestData.ProfessorID);
 
-    if(uniID == -1) {
-      console.log("adding a new uni, class, and prof") //and classType
-      
+    let newUniID = uniID;
+    let newClassTypeID = classTypeID;
+    let newClassID = classID;
+    let newProfessorID = professorID;
+    let ret = null;
 
 
-
-
-      // setToRemove(id)
-    } else if (classID == -1 && professorID == -1) {
-      console.log("adding a new class and prof") //and classType
-      // setToRemove(id)
-    } else if (classID == -1) {
-      console.log("adding a new class") //and clasType
-      // setToRemove(id)
-    } else if (professorID == -1) {
-      console.log("adding a new prof")
-      // setToRemove(id)
+    const display = () => {
+      console.log({
+        uniID: uniID,
+        uniName: uniName,
+        classID: classID,
+        className: className,
+        classNumber: classNumber,
+        professorID: professorID,
+        professorName: professorName,
+        difficultyValue: difficultyValue,
+        qualityValue: qualityValue,
+        grade: grade,
+        termTaken: termTaken,
+        comment: comment,
+        userID: userID,
+        classTypeID: classTypeID,
+        classType: classType
+      });
     }
 
-    //then add comment at the endwads aw
-    console.log("adding review too")
+    display();
+
+    if(uniID == -1) {
+      console.log("adding a new uni")
+      ret = axios.post(`${apiUrl}/adduni`, {
+        uniName: uniName
+      });
+        
+      //grab the new ID and set it
+      ret.then(response => {
+          // Access the data once the promise is resolved
+          newUniID = response.data[0].UniID;
+          console.log("Uni ID: ", newUniID);
+          setUniID(newUniID);
+      }).catch(error => {
+          // Handle any errors that occur
+          console.error(error);
+      });
+    }
+
+    display();
+
+    if(classTypeID == -1) {
+      console.log("adding a new class type")
+      ret = axios.post(`${apiUrl}/addclasstype`, {
+        classType: classType,
+        uniID: uniID
+      });
+
+       //grab the new ID and set it
+      ret.then(response => {
+        // Access the data once the promise is resolved
+        newClassTypeID = response.data[0].ClassTypeID;
+        console.log("Class Type ID: ", newClassTypeID);
+        setClassTypeID(newClassTypeID);
+      }).catch(error => {
+          // Handle any errors that occur
+          console.error(error);
+      });
+    }
+
+    display();
+
+    if(classID == -1) {
+      console.log("adding a new class")
+
+      ret = axios.post(`${apiUrl}/addclass`, {
+        className: className,
+        classNum: classNumber,
+        classTypeID: classTypeID,
+        uniID: uniID
+      });
+
+      ret.then(response => {
+        // Access the data once the promise is resolved
+        newClassID = response.data[0].ClassID;
+        console.log("Class ID: ", newClassID);
+        setClassID(newClassID);
+      }).catch(error => {
+          // Handle any errors that occur
+          console.error(error);
+      });
+    }
+
+    display();
+
+    if(professorID == -1) {
+      console.log("adding a new professor")
+      ret = axios.post(`${apiUrl}/addprofessor`, {
+        name: professorName,
+        uniID: uniID
+      });
+
+      ret.then(response => {
+        // Access the data once the promise is resolved
+        newProfessorID = response.data[0].ProfessorID;
+        console.log("Professor ID: ", newProfessorID);
+        setProfessorID(newProfessorID);
+      }).catch(error => {
+          // Handle any errors that occur
+          console.error(error);
+      });
+    }
+
+    display();
+
+    //then add comment at the end
+    console.log("adding review")
+
+    axios.post(`${apiUrl}/addcomment`, {
+      classID: classID,
+      professorID: professorID,
+      difficultyValue: difficultyValue,
+      qualityValue: qualityValue,
+      grade: grade,
+      termTaken: termTaken + " " + year,
+      comment: comment,
+      userID: userID
+    });
+
+    //handleReject(requestData.RequestID);
   }
- 
   const handleReject = (id) => {
     axios.delete(`${apiUrl}/removerequest`, {
       data: { requestID: requestData.RequestID }
@@ -96,6 +202,23 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
       // Handle the error if needed
       console.error('Error removing request:', error);
     });
+
+    //clear all the fields in the search bars
+    setUniName("");
+    setUniID(-1);
+    setClassName("");
+    setClassID(-1);
+    setClassNumber("");
+    setProfessorID(-1);
+    setProfessorName("");
+    setDifficulty(0);
+    setquality(0);
+    setGrade("A+");
+    setTermTaken("");
+    setComment("");
+    setClassType("");
+    setClassTypeID(-1);
+    setYear(new Date().getFullYear());
   };
 
 const handleClassID = (classID) => {
