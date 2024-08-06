@@ -61,13 +61,18 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
     console.log("classID:", requestData.ClassID, "UniID:", requestData.UniID, "prof ID:", requestData.ProfessorID)
 
     if(uniID == -1) {
-      console.log("adding a new uni, class, and prof")
+      console.log("adding a new uni, class, and prof") //and classType
+      
+
+
+
+
       // setToRemove(id)
     } else if (classID == -1 && professorID == -1) {
-      console.log("adding a new class and prof")
+      console.log("adding a new class and prof") //and classType
       // setToRemove(id)
     } else if (classID == -1) {
-      console.log("adding a new class")
+      console.log("adding a new class") //and clasType
       // setToRemove(id)
     } else if (professorID == -1) {
       console.log("adding a new prof")
@@ -106,15 +111,7 @@ useEffect(() => {
   handleClassID()
 }, [requestData])
 
-  const numbers = [1, 2, 3, 4, 5];
-  const grades = ["A+", "A", "A-", "B+", "B", "B-", "C+", "C", "C-", "D", "F"];
-  const semesters = ["Fall", "Spring", "Summer", "Winter"];
 
-  const getLastTenYears = () => {
-    const currentYear = new Date().getFullYear();
-    const years = Array.from({ length: 10 }, (_, index) => currentYear - index);
-    return years;
-  };
 
   useEffect(() => { //need to be explained from ryan
         if(isChecked == false) {

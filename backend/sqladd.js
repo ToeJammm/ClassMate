@@ -111,7 +111,6 @@ export async function addComment(poolConnection, userID, comment, termTaken, gra
     console.log("difficultyValue: " + difficultyValue);
     console.log("qualityValue: " + qualityValue);
     console.log("professorID: " + professorID);
-
     try {
         console.log("Adding comment: '"  + comment + "' to database");
         let resultSet = await poolConnection.request()

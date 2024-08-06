@@ -81,7 +81,7 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
 
     console.log("data: ", data);
 
-    axios.post("${apiUrl}/addcomment", data) //post request for review
+    axios.post(`${apiUrl}/addcomment`, data) //post request for review
       .then(response => {
         console.log("Post request successful", response.data);
         FetchReviews(uni, classID);
