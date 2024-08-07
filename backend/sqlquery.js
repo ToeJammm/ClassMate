@@ -32,7 +32,7 @@ export async function getClassInfo(poolConnection, classID, uniID) {
                 LEFT JOIN Users u ON d.UserID = u.UserID
             )
 
-        SELECT d.DifficultyValue, d.QualityValue, d.ProfessorName, d.Email, c.Comment, c.TermTaken, c.Grade, c.PostDate, cl.ClassType, cl.ClassName, cl.ClassNum, cl.UniName
+        SELECT d.DifficultyValue, d.QualityValue, d.ProfessorName, d.Email, c.Comment, c.TermTaken, c.Grade, c.PostDate, c.CommentID, cl.ClassType, cl.ClassName, cl.ClassNum, cl.UniName
         FROM fulldiffname d
         LEFT JOIN Comments c ON d.DifficultyID = c.DifficultyID
         LEFT JOIN fullclassname cl ON d.ClassID = cl.ClassID
@@ -45,6 +45,7 @@ export async function getClassInfo(poolConnection, classID, uniID) {
         return null;
     }
 }
+
 
 // Gets all the information about the ratings for aggregate data
 export async function getClassRatings(poolConnection, classID, uniID) {

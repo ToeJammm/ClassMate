@@ -16,7 +16,7 @@ export const ClassSearchResultsList = ({ results, Uni }) => {
   };
 
   return (
-    <div className="results-list">
+    <div className="class-results-list">
       {results.map((result, id) => {
         return (
           <div

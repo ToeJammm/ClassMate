@@ -51,7 +51,7 @@ app.get('/uni/:uniID/allclasses', async (req, res) => {
     res.json(record);
 });
 
-// Gets all class info and comments for a specific class at a specific university
+// Gets all comments for a specific class at a specific university
 app.get('/uni/:uniID/class/:classID', async (req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();

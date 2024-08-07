@@ -6,8 +6,6 @@ const apiUrl = __API_BASE_URL__;
 
 export const ClassTypeSearchBar = ({ setResults, uniID, setClassTypeID, setClassType, classType }) => {
     const [input, setInput] = useState("");
-
-    console.log("Running ClassTypeSearchBar");
     
     const fetchData = async (value) => {
             const response = await fetch(`${apiUrl}/${uniID}/classTypes`);

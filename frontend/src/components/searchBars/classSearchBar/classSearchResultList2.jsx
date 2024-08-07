@@ -25,7 +25,7 @@ export const ClassSearchResultsList2 = ({ results, uniID, setClassID, setClassTy
   };
 
   return (
-    <div className="results-list">
+    <div className="class-results-list">
       {results.map((result, id) => {
         return (
           <div

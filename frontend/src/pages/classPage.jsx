@@ -52,7 +52,7 @@ import ReviewHeader from "../components/reviewHeader/reviewHeader";
           
         
       <div className="review-container">
-        <ReviewList reviews={reviews} />
+        <ReviewList reviews={reviews} setReviews={setReviews}/>
       </div>
     </div>
     </>

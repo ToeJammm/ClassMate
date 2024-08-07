@@ -12,11 +12,9 @@ import { ProfessorSearchBar } from "../searchBars/professorSearchBar/professorSe
 import { NewAddonDisplayPrompt } from "../newAddonDisplayPrompt/newAddonDisplayPrompt";
 import Review from "../reviewList/review";
 
-
 const apiUrl = __API_BASE_URL__;
 
 export default function AdminRequestForm({ requestData, num, setToRemove }) {
-
   const [uniID, setUniID] = useState(-1);
   const [uniName, setUniName] = useState("");
   const [classID, setClassID] = useState(-1);
@@ -32,15 +30,13 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
   const [qualityValue, setquality] = useState(0);
   const [grade, setGrade] = useState("A+");
   const [termTaken, setTermTaken] = useState("");
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [year, setYear] = useState("");
   const [comment, setComment] = useState("");
   const [userID, setUserID] = useState("");
   const [classFullName, setClassFullName] = useState("");
-  const [isChecked, setIsChecked] = useState(false)
-  const [classType, setClassType] = useState("")
-  const [classNumber, setClassNumber] = useState("")
-
-
+  const [isChecked, setIsChecked] = useState(false);
+  const [classType, setClassType] = useState("");
+  const [classNumber, setClassNumber] = useState("");
 
   useEffect(() => {
     if (localStorage.getItem("userID") !== null) {
@@ -52,29 +48,25 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
     }
   }, []);
 
-
   // useEffect(() => {
   //   console.log("request data: ", requestData);
   // }, [uniID, uniName]);
 
-  const handleAccept = (id) => {
-    console.log("classID:", requestData.ClassID, "UniID:", requestData.UniID, "prof ID:", requestData.ProfessorID);
-
-    let newUniID = uniID;
-    let newClassTypeID = classTypeID;
-    let newClassID = classID;
-    let newProfessorID = professorID;
-    let ret = null;
-
+  const handleAccept = async (id) => {
+    let FinalUniID = uniID;
+    let FinalClassTypeID = classTypeID;
+    let FinalClassID = classID;
+    let FinalProfessorID = professorID;
+ 
 
     const display = () => {
       console.log({
-        uniID: uniID,
+        uniID: FinalUniID,
         uniName: uniName,
-        classID: classID,
+        classID: FinalClassID,
         className: className,
         classNumber: classNumber,
-        professorID: professorID,
+        professorID: FinalProfessorID,
         professorName: professorName,
         difficultyValue: difficultyValue,
         qualityValue: qualityValue,
@@ -82,128 +74,114 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
         termTaken: termTaken,
         comment: comment,
         userID: userID,
-        classTypeID: classTypeID,
-        classType: classType
-      });
-    }
-
-    display();
-
-    if(uniID == -1) {
-      console.log("adding a new uni")
-      ret = axios.post(`${apiUrl}/adduni`, {
-        uniName: uniName
-      });
-        
-      //grab the new ID and set it
-      ret.then(response => {
-          // Access the data once the promise is resolved
-          newUniID = response.data[0].UniID;
-          console.log("Uni ID: ", newUniID);
-          setUniID(newUniID);
-      }).catch(error => {
-          // Handle any errors that occur
-          console.error(error);
-      });
-    }
-
-    display();
-
-    if(classTypeID == -1) {
-      console.log("adding a new class type")
-      ret = axios.post(`${apiUrl}/addclasstype`, {
+        classTypeID: FinalClassTypeID,
         classType: classType,
-        uniID: uniID
       });
-
-       //grab the new ID and set it
-      ret.then(response => {
-        // Access the data once the promise is resolved
-        newClassTypeID = response.data[0].ClassTypeID;
-        console.log("Class Type ID: ", newClassTypeID);
-        setClassTypeID(newClassTypeID);
-      }).catch(error => {
-          // Handle any errors that occur
-          console.error(error);
-      });
-    }
+    };
 
     display();
 
-    if(classID == -1) {
-      console.log("adding a new class")
+    try {
+      if (FinalUniID == -1) {
+        console.log("adding a new uni");
+        let response = await axios.post(`${apiUrl}/adduni`, {
+          uniName: uniName,
+        });
 
-      ret = axios.post(`${apiUrl}/addclass`, {
-        className: className,
-        classNum: classNumber,
-        classTypeID: classTypeID,
-        uniID: uniID
+        //grab the new ID and set it
+        FinalUniID = response.data[0].UniID;
+        console.log("new Uni ID: ", FinalUniID);
+
+        // setUniID(newUniID);
+        
+      }
+
+    
+
+      if (FinalClassTypeID == -1) {
+        console.log("adding a new class type");
+        let response = await axios.post(`${apiUrl}/addclasstype`, {
+          classType: classType,
+          uniID: FinalUniID,
+        });
+
+        //grab the new ID and set it
+          FinalClassTypeID = response.data[0].ClassTypeID;
+          console.log("new Class Type ID: ", FinalClassTypeID);
+          // setClassTypeID(newClassTypeID);
+      }
+
+   
+
+      if (FinalClassID == -1) {
+        console.log("adding a new class");
+
+        let response = await axios.post(`${apiUrl}/addclass`, {
+          className: className,
+          classNum: classNumber,
+          classTypeID: FinalClassTypeID,
+          uniID: FinalUniID,
+        });
+
+          FinalClassID = response.data[0].ClassID;
+          console.log("new Class ID: ", FinalClassID);
+          // setClassID(newClassID);
+      }
+
+      
+
+      if (FinalProfessorID == -1) {
+        console.log("adding a new professor");
+        let response = await axios.post(`${apiUrl}/addprofessor`, {
+          name: professorName,
+          uniID: FinalUniID,
+        });
+
+          FinalProfessorID = response.data[0].ProfessorID;
+          console.log("new Professor ID: ", FinalProfessorID);
+          // setProfessorID(newProfessorID);
+      }
+
+      display();
+
+      //then add comment at the end
+
+      console.log("adding review");
+
+      axios.post(`${apiUrl}/addcomment`, {
+        classID: FinalClassID,
+        professorID: FinalProfessorID,
+        difficultyValue: difficultyValue,
+        qualityValue: qualityValue,
+        grade: grade,
+        termTaken: termTaken + " " + year,
+        comment: comment,
+        userID: userID,
       });
 
-      ret.then(response => {
-        // Access the data once the promise is resolved
-        newClassID = response.data[0].ClassID;
-        console.log("Class ID: ", newClassID);
-        setClassID(newClassID);
-      }).catch(error => {
-          // Handle any errors that occur
-          console.error(error);
-      });
+      handleReject(requestData.RequestID);
+    } catch (error) {
+      console.log(error);
     }
+  };
 
-    display();
-
-    if(professorID == -1) {
-      console.log("adding a new professor")
-      ret = axios.post(`${apiUrl}/addprofessor`, {
-        name: professorName,
-        uniID: uniID
-      });
-
-      ret.then(response => {
-        // Access the data once the promise is resolved
-        newProfessorID = response.data[0].ProfessorID;
-        console.log("Professor ID: ", newProfessorID);
-        setProfessorID(newProfessorID);
-      }).catch(error => {
-          // Handle any errors that occur
-          console.error(error);
-      });
-    }
-
-    display();
-
-    //then add comment at the end
-    console.log("adding review")
-
-    axios.post(`${apiUrl}/addcomment`, {
-      classID: classID,
-      professorID: professorID,
-      difficultyValue: difficultyValue,
-      qualityValue: qualityValue,
-      grade: grade,
-      termTaken: termTaken + " " + year,
-      comment: comment,
-      userID: userID
-    });
-
-    //handleReject(requestData.RequestID);
-  }
   const handleReject = (id) => {
-    axios.delete(`${apiUrl}/removerequest`, {
-      data: { requestID: requestData.RequestID }
-    })
-    .then(response => {
-      // Handle the response if needed
-      console.log('Request removed:', response.data);
-      setToRemove(id)
-    })
-    .catch(error => {
-      // Handle the error if needed
-      console.error('Error removing request:', error);
-    });
+    axios
+      .delete(`${apiUrl}/removerequest`, {
+        data: { requestID: requestData.RequestID },
+      })
+      .then((response) => {
+        // Handle the response if needed
+        console.log("Request removed:", response.data);
+        setToRemove(id);
+      })
+      .catch((error) => {
+        // Handle the error if needed
+        console.error("Error removing request:", error);
+      });
 
     //clear all the fields in the search bars
+    console.log("clearing all review fields")
     setUniName("");
     setUniID(-1);
     setClassName("");
@@ -221,57 +199,38 @@ export default function AdminRequestForm({ requestData, num, setToRemove }) {
     setYear(new Date().getFullYear());
   };
 
-const handleClassID = (classID) => {
-console.log("classID is", requestData.ClassID)
-if(requestData.ClassID == -1) {
-  setIsChecked(true)
-} else {
-  setIsChecked(false)
-}
-}
+  const handleClassID = (classID) => {
+    console.log("classID is", requestData.ClassID);
+    if (requestData.ClassID == -1) {
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
+    }
+  };
 
-useEffect(() => {
-  handleClassID()
-}, [requestData])
+  useEffect(() => {
+    handleClassID();
+  }, [requestData]);
 
-
-
-  useEffect(() => { //need to be explained from ryan
-        if(isChecked == false) {
+  useEffect(() => {
+    //need to be explained from ryan
+    if (isChecked == false) {
       setClassName("");
       setClassNumber("");
       setClassTypeID(-1);
       setClassType("");
       setClassResults([]);
       setClassTypeResults([]);
-      }
-  }, [isChecked])
+    }
+  }, [isChecked]);
 
-
-
-  //Logging the values of everything -- IDs will be -1 if the user is adding a new item
-  // useEffect(() => {
-  //   console.log("classTypeID: ", classTypeID);
-  //   console.log("classTypeName: ", classType);
-  // }, [classTypeID, classType]);
-
-  // useEffect(() => {
-  //   console.log("classID: ", classID);
-  //   console.log("className: ", className);
-  //   console.log("fullName: ", classFullName);
-  // }, [classID, className]);
-
-  // useEffect(() => {
-  //   console.log("professorID: ", professorID);
-  //   console.log("professorName: ", professorName);
-  // }, [professorID, professorName]);
 
   //use effect for request data to change every variable in the request form
 
   useEffect(() => {
-    if(requestData.ClassID === -1) {
-      handleClassID()
-      console.log("class does not exist")
+    if (requestData.ClassID === -1) {
+      handleClassID();
+      console.log("class does not exist");
     }
     console.log("requestData: ", requestData);
     if (requestData != "") {
@@ -289,145 +248,155 @@ useEffect(() => {
       setComment(requestData.Comment);
       setClassType(requestData.ClassType);
       setClassTypeID(requestData.ClassTypeID);
-      setClassFullName(requestData.ClassType + " " + requestData.ClassNumber + ": " + requestData.ClassName)
-      setYear(requestData.Year)
+      setClassFullName(
+        requestData.ClassType +
+          " " +
+          requestData.ClassNumber +
+          ": " +
+          requestData.ClassName
+      );
+      setYear(requestData.Year);
     }
-  }, [requestData, num]); //num was added to update everytime a list item was clicked 
+  }, [requestData, num]); //num was added to update everytime a list item was clicked
 
   useEffect(() => {
-    console.log("full name: ", classFullName)
-  }, [classFullName])
+    console.log("full name: ", classFullName);
+  }, [classFullName]);
 
   return (
-    
-        <div className="popup-inner">
-          <h2 className="request-title">Request Form</h2>
-          <SearchBar
-            setResults={setUniResults}
-            setUniName={setUniName}
-            setUniID={setUniID}
-            uniName={uniName}
+    <div className="popup-inner">
+      <h2 className="request-title">Request Form</h2>
+      <SearchBar
+        setResults={setUniResults}
+        setUniName={setUniName}
+        setUniID={setUniID}
+        uniName={uniName}
+      />
+      <SearchResultsList
+        setResults={setUniResults}
+        results={uniResults}
+        setUniID={setUniID}
+        setUniName={setUniName}
+      />
+
+      <div className="checkBox-wrapper">
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onClick={() => {
+            setIsChecked(!isChecked);
+          }}
+        ></input>
+        <p>Check Box If Class Does Not Exist</p>
+      </div>
+
+      {isChecked ? (
+        <div className="class-inputs-popup">
+          <ClassTypeSearchBar
+            setResults={setClassTypeResults}
+            uniID={uniID}
+            setClassTypeID={setClassTypeID}
+            setClassType={setClassType}
+            classType={classType}
           />
-          <SearchResultsList
-            setResults={setUniResults}
-            results={uniResults}
-            setUniID={setUniID}
-            setUniName={setUniName}
+          <ClassTypeResultsList
+            setResults={setClassTypeResults}
+            results={classTypeResults}
+            setClassTypeID={setClassTypeID}
+            setClassTypeName={setClassType}
           />
-
-          <div className="checkBox-wrapper">
-            <input type="checkbox" 
-            checked={isChecked} 
-            onClick={(() => {setIsChecked(!isChecked)})}></input>
-            <p>Check Box If Class Does Not Exist</p>
-          </div>
-
-          {isChecked ? (
-            <div className="class-inputs-popup">
-              <ClassTypeSearchBar
-                setResults={setClassTypeResults}
-                uniID={uniID}
-                setClassTypeID={setClassTypeID}
-                setClassType={setClassType}
-                classType={classType}
-              />
-              <ClassTypeResultsList
-                setResults={setClassTypeResults}
-                results={classTypeResults}
-                setClassTypeID={setClassTypeID}
-                setClassTypeName={setClassType}
-              />
-              <NewAddonDisplayPrompt ID={classTypeID} />
-              <input
-                type="text"
-                placeholder="Class Number"
-                className="requestInput"
-                value={classNumber}
-                onChange={(e) => setClassNumber(e.target.value)}
-              ></input>
-              <input
-                type="text"
-                placeholder="Class Name"
-                className="requestInput"
-                value={className}
-                onChange={(e) => setClassName(e.target.value)}
-              ></input>
-            </div>
-          ) : (
-            <div className="class-searchbar-popup">
-              <ClassSearchBar
-                setResults={setClassResults}
-                setClassFullName={setClassFullName}
-                uniID={uniID}
-                setClassID={setClassID}
-                setClassName={setClassName}
-                setClassNumber={setClassNumber}
-                classFullName={classFullName}
-              />
-              <ClassSearchResultsList2
-                results={classResults}
-                setClassResults={setClassResults}
-                uniID={uniID}
-                setClassID={setClassID}
-                setClassName={setClassName}
-                setClassNumber={setClassNumber}
-                setClassFullName={setClassFullName}
-                setClassType={setClassType}
-              />
-              <NewAddonDisplayPrompt ID={classID} />
-            </div>
-          )}
-          
-            <ProfessorSearchBar
-              setResults={setProfessorResults}
-              setProfessorID={setProfessorID}
-              setProfessorName={setProfessorName}
-              professorName={professorName}
-              uniID={uniID}
-            />
-            <ProfessorResultsList
-              results={professorResults}
-              setResults={setProfessorResults}
-              setProfessorID={setProfessorID}
-              setProfessorName={setProfessorName}
-            />
-            <NewAddonDisplayPrompt ID={professorID} />
-          
-
-          <div className="selectedInfo">
-            <div className="specificInfo">
-              <div>Difficulty: </div>
-              <div> {difficultyValue ? difficultyValue : ""}</div>
-          </div>
-          <div className="specificInfo">
-              <div>Utility: </div>
-              <div> {qualityValue ? qualityValue : ""}</div>
-          </div>
-          <div className="specificInfo">
-              <div>Grade: </div>
-              <div>{difficultyValue ? difficultyValue : ""}</div>
-          </div>
-          <div className="specificInfo">
-              <div>Taken: </div>
-              <div> {termTaken + " " + year ? termTaken + " " + year  : ""}</div>
-          </div>
-            <textarea
-              className="adminRequestCommentBox"
-              type="text"
-              placeholder="Comment..."
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            ></textarea>
-          </div>
-          <div className="button-area">
-          <button className="accept-button" onClick={handleAccept}>
-            Accept
-          </button>
-          <button className="reject-button" onClick={() => handleReject(requestData.RequestID)}>
-            Reject
-          </button>
-          </div>
-
+          <NewAddonDisplayPrompt ID={classTypeID} />
+          <input
+            type="text"
+            placeholder="Class Number"
+            className="requestInput"
+            value={classNumber}
+            onChange={(e) => setClassNumber(e.target.value)}
+          ></input>
+          <input
+            type="text"
+            placeholder="Class Name"
+            className="requestInput"
+            value={className}
+            onChange={(e) => setClassName(e.target.value)}
+          ></input>
         </div>
+      ) : (
+        <div className="class-searchbar-popup">
+          <ClassSearchBar
+            setResults={setClassResults}
+            setClassFullName={setClassFullName}
+            uniID={uniID}
+            setClassID={setClassID}
+            setClassName={setClassName}
+            setClassNumber={setClassNumber}
+            classFullName={classFullName}
+          />
+          <ClassSearchResultsList2
+            results={classResults}
+            setClassResults={setClassResults}
+            uniID={uniID}
+            setClassID={setClassID}
+            setClassName={setClassName}
+            setClassNumber={setClassNumber}
+            setClassFullName={setClassFullName}
+            setClassType={setClassType}
+          />
+          <NewAddonDisplayPrompt ID={classID} />
+        </div>
+      )}
+
+      <ProfessorSearchBar
+        setResults={setProfessorResults}
+        setProfessorID={setProfessorID}
+        setProfessorName={setProfessorName}
+        professorName={professorName}
+        uniID={uniID}
+      />
+      <ProfessorResultsList
+        results={professorResults}
+        setResults={setProfessorResults}
+        setProfessorID={setProfessorID}
+        setProfessorName={setProfessorName}
+      />
+      <NewAddonDisplayPrompt ID={professorID} />
+
+      <div className="selectedInfo">
+        <div className="specificInfo">
+          <div>Difficulty: </div>
+          <div> {difficultyValue ? difficultyValue : ""}</div>
+        </div>
+        <div className="specificInfo">
+          <div>Utility: </div>
+          <div> {qualityValue ? qualityValue : ""}</div>
+        </div>
+        <div className="specificInfo">
+          <div>Grade: </div>
+          <div>{difficultyValue ? difficultyValue : ""}</div>
+        </div>
+        <div className="specificInfo">
+          <div>Taken: </div>
+          <div> {termTaken + " " + year ? termTaken + " " + year : ""}</div>
+        </div>
+        <textarea
+          className="adminRequestCommentBox"
+          type="text"
+          placeholder="Comment..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        ></textarea>
+      </div>
+      <div className="button-area">
+        <button className="accept-button" onClick={handleAccept}>
+          Accept
+        </button>
+        <button
+          className="reject-button"
+          onClick={() => handleReject(requestData.RequestID)}
+        >
+          Reject
+        </button>
+      </div>
+    </div>
   );
 }
