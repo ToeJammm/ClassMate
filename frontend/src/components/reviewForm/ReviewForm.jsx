@@ -37,20 +37,20 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph, reviews, set
   const [year, setYear] = useState(new Date().getFullYear());
   const [comment, setComment] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [userID, setUserID] = useState("");
+  const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [madeReview, setMadeReview] = useState(false);
   const [userComment, setUserComment] = useState([]);
 
-  useEffect(() => {
-    if (localStorage.getItem("userID") !== null) {
-      setUserID(localStorage.getItem("userID"));
-      console.log("set UserID to", userID);
-    } else {
-      console.log("user ID " + localStorage.getItem("userID"))
-      console.log("user is not logged in, won't be able to make a post")
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("userID") !== null) {
+  //     setUserID(localStorage.getItem("userID"));
+  //     console.log("set UserID to", localStorage.getItem("userID"));
+  //   } else {
+  //     console.log("user ID " + localStorage.getItem("userID"))
+  //     console.log("user is not logged in, won't be able to make a post")
+  //   }
     
-  }, [])
+  // }, [])
 
   useEffect(() => {
     //See if the user has already made a review
@@ -62,9 +62,7 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph, reviews, set
     axios.get(`${apiUrl}/${uniID}/${classID}/${userID}/getUserClassRatings`)
     .then(response => {
       const localUserComment = response.data;
-      
       console.log("userComment: ", userComment);
-      setMadeReview(userComment.length !== 0);
       setUserComment(localUserComment);
     })
 }, [reviews]);
@@ -95,7 +93,6 @@ useEffect(() => {
   
   const handleSubmit = () => {
     const updatedTerm = termTaken + " " + year;
-
     const data = {
       difficultyValue,
       qualityValue,
@@ -121,7 +118,6 @@ useEffect(() => {
     axios.post(`${apiUrl}/addcomment`, data) //post request for review
       .then(response => {
         console.log("Post request successful", response.data);
-        FetchReviews(uni, classID);
         window.location.reload(); // Reload the page after successful submission
       })
       .catch(error => {

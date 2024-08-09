@@ -54,18 +54,18 @@ const SimpleLineChart = () => (
 );
 
   return (
-    <html lang="en">
-    <head>
+    <div>
+    <div>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </head>
+    </div>
         <div className='graphContainer'>
             <div className="className-text-wrapper">
                 <h2 className='className-text'>{className}</h2>
             </div>
             <SimpleLineChart />
         </div>
-    </html>
+    </div>
   )
 }
 

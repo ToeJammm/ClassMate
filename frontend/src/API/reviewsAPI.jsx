@@ -12,7 +12,7 @@ export const FetchReviews = async (uni, classID) => {
       return response.data; // Return the fetched reviews
     }
   } catch (error) {
-    console.log(error);
+    console.log("error:", error);
     return []; // Return an empty array in case of error
   }
 };
