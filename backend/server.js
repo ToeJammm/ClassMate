@@ -7,7 +7,7 @@ import cron from 'node-cron';
 
 //Tons of stuff from the other files
 import {connect, closeConnection, reopenConnection, testQuery} from './sqlconnect.js';
-import { getUniClassTypes, getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserInfo, getClassRatings} from './sqlquery.js'
+import { getUniClassTypes, getUserRequests, getUniversities, getClassInfo, getClassesByUniAndType, getAllClassesByUni, getProfessorsByClassID, getProfessorsAtUni, getPostersByClassID, getUserInfo, getClassRatings, getUserClassRatings, getCommentID} from './sqlquery.js'
 import { addUniversity, addClassType, addComment, addClass, addDifficulty, addProfessor, addUser, addRequest } from './sqladd.js';
 import { deleteRequest, deleteUniversity, deleteClassType, deleteComment, deleteClass, deleteDifficulty, deleteProfessor, deleteUser } from './sqldelete.js';
 // import { pool } from 'mssql';
@@ -203,14 +203,25 @@ app.get('/activity', async (req, res) => {
     res.json({'Time inactive (minutes)': ((Date.now() - lastActivity) / 1000 / 60).toFixed(3)});
 });
 
-app.get('/getUserClassRatings', async(req, res) => {
+app.get('/:uniID/:classID/:userID/getUserClassRatings', async(req, res) => {
     await reopenConnection(poolConnection);
     lastActivity = Date.now();
     let record = await getUserClassRatings(
         poolConnection,
-        req.body.classID,
-        req.body.uniID,
-        req.body.userID,
+        req.params.classID,
+        req.params.uniID,
+        req.params.userID,
+    )
+    res.json(record)
+});
+
+app.get('/:classID/:userID/getCommentID', async(req, res) => {
+    await reopenConnection(poolConnection);
+    lastActivity = Date.now();
+    let record = await getCommentID(
+        poolConnection,
+        req.params.classID,
+        req.params.userID,
     )
     res.json(record)
 });

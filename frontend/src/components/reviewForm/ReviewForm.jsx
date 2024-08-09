@@ -6,9 +6,10 @@ import { FetchReviews } from "../../API/reviewsAPI";
 // import { TeacherSearchList } from "../searchBars/teacherSearchBar/teacherSearchList";
 const apiUrl = __API_BASE_URL__;
 
-export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
+export const ReviewForm = ( { uni, setAlert, classID, setShowGraph, reviews, setReviews} ) => {
    const [professors, setProfessors] = useState([]);
    const [professorID, setProfessorID] = useState(""); //professor ID wansn't getting set unless I did this
+   const uniID = uni;
   useEffect(() => { //gets list of professors
     const fetchData = async () => {
       try {
@@ -37,16 +38,42 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
   const [comment, setComment] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [userID, setUserID] = useState("");
+  const [madeReview, setMadeReview] = useState(false);
+  const [userComment, setUserComment] = useState([]);
 
   useEffect(() => {
-  if (localStorage.getItem("userID") !== null) {
-    setUserID(localStorage.getItem("userID"));
-    console.log("set UserID to", userID);
-  } else {
-    console.log("user ID " + localStorage.getItem("userID"))
-    console.log("user is not logged in, won't be able to make a post")
-  }
+    if (localStorage.getItem("userID") !== null) {
+      setUserID(localStorage.getItem("userID"));
+      console.log("set UserID to", userID);
+    } else {
+      console.log("user ID " + localStorage.getItem("userID"))
+      console.log("user is not logged in, won't be able to make a post")
+    }
+    
   }, [])
+
+  useEffect(() => {
+    //See if the user has already made a review
+    console.log("Getting user review");
+    console.log("uniID: ", uniID);
+    console.log("classID: ", classID);
+    console.log("userID: ", userID);
+
+    axios.get(`${apiUrl}/${uniID}/${classID}/${userID}/getUserClassRatings`)
+    .then(response => {
+      const localUserComment = response.data;
+      
+      console.log("userComment: ", userComment);
+      setMadeReview(userComment.length !== 0);
+      setUserComment(localUserComment);
+    })
+}, [reviews]);
+
+useEffect(() => {
+  console.log("userComment length: ", userComment.length);
+  setMadeReview(userComment.length != 0);
+}, [userComment]);
+
 
   const editComment = () => {
     console.log("editing comment");
@@ -54,6 +81,16 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
 
   const deleteComment = () => {
     console.log("deleting comment");
+    //Add app.delete request here
+    axios.get(`${apiUrl}/${classID}/${userID}/getCommentID`)
+    .then(response => {
+      const commentID = response.data[0].CommentID;
+      console.log("commentID: ", commentID);
+      axios.delete(`${apiUrl}/deletecomment`, { data: { commentID }})
+      setReviews(reviews.filter(review => review.CommentID !== commentID));
+      setMadeReview(false);
+      setUserComment([]); 
+    });
   }
   
   const handleSubmit = () => {
@@ -121,16 +158,21 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph} ) => {
   return (
     <div className="popup-container">
       {!isOpen && (
-        <div className ="bottom-buttons">
-          <div className="addReview-button" onClick={togglePopup}>
-            Add A Review
-          </div>
-          <div className="edit-button" onClick={editComment}>
-            Edit
-          </div>
-          <div className="delete-button" onClick={deleteComment}>
-            Delete
-          </div>
+        <div className="bottom-buttons">
+          {userComment.length == 0 ? (
+            <div className="addReview-button" onClick={togglePopup}>
+              Add A Review
+            </div>
+          ) : (
+            <>
+              <div className="edit-button" onClick={editComment}>
+                Edit
+              </div>
+              <div className="delete-button" onClick={deleteComment}>
+                Delete
+              </div>
+            </>
+          )}
         </div>
       )}
       {isOpen && (

@@ -44,8 +44,8 @@ import ReviewHeader from "../components/reviewHeader/reviewHeader";
      <div className="back" ><img className="backArrow" onClick={() => navigate(-1)} src="/public/images/arrow.png" alt="ClassMateLogo" /></div>
      <div className="class-container">
       <div className="meta-data">
-      {showGraph === 1 && (<ReviewHeader uniID={uni} classID={classID} className={className}/>)}
-        <ReviewForm uni={uni} setAlert={setAlertState} classID={classID} setShowGraph={setShowGraph}/>
+      {showGraph === 1 && (<ReviewHeader uniID={uni} classID={classID} className={className} reviews={reviews}/>)}
+        <ReviewForm uni={uni} setAlert={setAlertState} classID={classID} setShowGraph={setShowGraph} reviews={reviews} setReviews={setReviews}/>
         {alert && <p>You must be logged in to make a review</p>}
       </div>
     

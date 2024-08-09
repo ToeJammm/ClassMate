@@ -5,51 +5,28 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, LabelList } from 'rec
 
 const apiUrl = __API_BASE_URL__;
 
-export default function ReviewHeader( {uniID, classID, className}) {
-    const [qualities, setQualities] = useState([]);
-    const [difficulty, setDifficulty] = useState([]);
+export default function ReviewHeader( {uniID, classID, className, reviews}) {
+    const [data, setData] = useState([]);
 
 
 function fetchData() {
-    axios.get(`${apiUrl}/uni/${uniID}/class/${classID}/ratings`)
-    .then(response => {
-        const ratings = response.data;
-        const mappedQualities = ratings.map(rating => rating.QualityValue);
-        const mappedDifficulty = ratings.map(rating => rating.DifficultyValue);
-        setQualities(mappedQualities);
-        setDifficulty(mappedDifficulty);
-    })
-    .catch(error => {
-        console.log(error);
-    })
-
+  const mappedQualities = reviews.map(rating => rating.QualityValue);
+  const mappedDifficulty = reviews.map(rating => rating.DifficultyValue);
+  setData([
+    {name: "Difficulty", dif: mappedDifficulty.reduce((a, b) => a + b, 0) / mappedDifficulty.length},
+    {name: "Utility", qual: mappedQualities.reduce((a, b) => a + b, 0) / mappedQualities.length}
+  ])
 }
 
+//Call this function at the start AND whenever the commentLength changes
 useEffect(() => {
+    console.log("name: ", className);
     fetchData();
 }, []);
 
 useEffect(() => {
-    console.log("qualities ", qualities);
-    console.log("difficulties ", difficulty);
-}, [qualities, difficulty]);
-
-useEffect(() =>{
-  console.log("name: ", className);
-},[])
-
-const averageQuality = qualities.reduce((acc, curr) => acc + curr, 0) / qualities.length;
-const averageDifficulty = difficulty.reduce((acc, curr) => acc + curr, 0) / difficulty.length;
-
-useEffect(() => {
-    console.log("averageQuality ", averageQuality);
-    console.log("averageDifficulty ", averageDifficulty);
-}, [averageQuality, averageDifficulty]);
-
-const data = [
-    {name: "Difficulty", dif: averageDifficulty},
-    {name: "Utility", qual: averageQuality}
-]
+  fetchData();
+}, [reviews]);
 
 const SimpleLineChart = () => (
     <ResponsiveContainer width="100%" height={320}>

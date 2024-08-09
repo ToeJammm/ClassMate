@@ -82,8 +82,9 @@ export async function getClassRatings(poolConnection, classID, uniID) {
 
 export async function getUserClassRatings(poolConnection, classID, uniID, userID) {
     try {
-        console.log("requesting class info for classID " + classID + " at university " + uniID);
-        let resultSet = await poolConnection.request().query(`
+        console.log("requesting class info for classID " + classID + " at university " + uniID + " for user " + userID);
+        let resultSet = await poolConnection.request()
+        .query(`
         WITH 
             fullclassname (ClassID, ClassType, ClassName, ClassNum, UniName, UniID) AS (
                 SELECT c.ClassID, ct.ClassType, c.ClassName, c.ClassNum, u.UniName, u.UniID
@@ -102,7 +103,7 @@ export async function getUserClassRatings(poolConnection, classID, uniID, userID
         FROM fulldiffname d
         LEFT JOIN Comments c ON d.DifficultyID = c.DifficultyID
         LEFT JOIN fullclassname cl ON d.ClassID = cl.ClassID
-        WHERE d.ClassID = ${classID} AND cl.UniID = '${uniID}' AND c.UserID = ${userID}
+        WHERE d.ClassID = ${classID} AND cl.UniID = ${uniID} AND d.UserID = ${userID}
         ORDER BY c.PostDate DESC
         `);
         return resultSet.recordset;
@@ -245,6 +246,26 @@ export async function getUniClassTypes(poolConnection, UniID) {
         let resultSet = await poolConnection.request().query(`
         SELECT * FROM [dbo].[ClassType] 
         WHERE UniID = '${UniID}'
+        `);
+        return resultSet.recordset;
+    } catch (err) {
+        console.error(err.message);
+        return null;
+    }
+}
+
+//Get the comment ID for the comment, given the classID, userID, and uniID
+
+export async function getCommentID(poolConnection, classID, userID) {
+    try {
+        console.log("Requesting comment ID for classID " + classID + " and userID " + userID);
+        let resultSet = await poolConnection.request().query(`
+        SELECT c.CommentID
+        FROM [dbo].[Comments] c
+        INNER JOIN [dbo].[Difficulty] d ON c.DifficultyID = d.DifficultyID
+        INNER JOIN [dbo].[Class] cl ON d.ClassID = cl.ClassID
+        INNER JOIN [dbo].[Users] u ON d.UserID = u.UserID
+        WHERE cl.ClassID = ${classID} AND u.UserID = ${userID}
         `);
         return resultSet.recordset;
     } catch (err) {
