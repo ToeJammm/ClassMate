@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./ReviewForm.css";
+import { ProfessorSearchBarClass } from "../searchBars/professorSearchBar/professorSearchBarClass";
+import { ProfessorResultsList } from "../searchBars/professorSearchBar/professorResultsList";
 import { FetchReviews } from "../../API/reviewsAPI";
+import { ProfessorSearchResult } from "../searchBars/professorSearchBar/professorSearchResult";
 // import { TeacherSearBar } from "../searchBars/teacherSearchBar/teacherSearchBar"
 // import { TeacherSearchList } from "../searchBars/teacherSearchBar/teacherSearchList";
 const apiUrl = __API_BASE_URL__;
@@ -40,6 +43,7 @@ export const ReviewForm = ( { uni, setAlert, classID, setShowGraph, reviews, set
   const [userID, setUserID] = useState(localStorage.getItem("userID"));
   const [madeReview, setMadeReview] = useState(false);
   const [userComment, setUserComment] = useState([]);
+  const [professorName, setProfessorName] = useState("");
 
   // useEffect(() => {
   //   if (localStorage.getItem("userID") !== null) {
@@ -104,6 +108,11 @@ useEffect(() => {
       userID
     };
 
+    if (professorID === -1) {
+      alert("Please select a professor");
+      return;
+    }
+
     console.log( "difficultyValue: " + difficultyValue);
     console.log( "utilityValue: " + qualityValue);
     console.log( "grade: " + grade);
@@ -148,6 +157,10 @@ useEffect(() => {
     return years;
   };
 
+  useEffect(() => {
+    console.log("professor ID: ", professorID);
+  }, [professorID]);
+
   // Call the function to get the array of last 10 years
   const lastTenYears = getLastTenYears();
 
@@ -161,9 +174,6 @@ useEffect(() => {
             </div>
           ) : (
             <>
-              <div className="edit-button" onClick={editComment}>
-                Edit
-              </div>
               <div className="delete-button" onClick={deleteComment}>
                 Delete
               </div>
@@ -234,13 +244,8 @@ useEffect(() => {
             </div>
             <div className="ratingswrapper">
               <div style={{marginRight: '13px'}}>Professor</div>
-               <select className="dropdown" onChange={(e) => setProfessorID(e.target.value)}>
-                {professors.map((professor) => (
-                  <option key={professor.ProfessorID} value={professor.ProfessorID}>
-                    {professor.Name}
-                  </option>
-                ))}
-              </select>
+              <ProfessorSearchBarClass setResults={setProfessors} uniID={uniID} setProfessorID={setProfessorID} setProfessorName={setProfessorName} professorName={professorName}/>
+              <ProfessorResultsList results={professors} setProfessorID={setProfessorID} setProfessorName={setProfessorName} setResults={setProfessors}/>
             </div>
               <textarea className="commentBox" type="text" placeholder="Comment..."
               onChange={(e) => setComment(e.target.value)}></textarea> 
