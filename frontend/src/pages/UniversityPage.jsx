@@ -19,21 +19,21 @@ export default function UniversityPage() {
       <div className="back"><NavLink to="/"><img className="backArrow" src="/public/images/arrow.png" alt="ClassMateLogo" /></NavLink></div>
       <h3>Search For a Class In</h3>
         <h1 className="university-name">{result ? result.UniName : "Loading..."}</h1>
-        <div className="request-button">
+      
          {localStorage.getItem("loggedIn") == "true" ? 
-            <NavLink to="/Request">
-              <button className="navBar-logout-text" >
+            <NavLink className="Navlink" to="/Request">
+              <button className="request-button-uni" >
                Or Request a New One
               </button>
             </NavLink>
               :
-            <NavLink to="/Login">
-              <button className="navBar-logout-text" >
+            <NavLink className="Navlink" to="/Login">
+              <button className="request-button-uni" >
                 Request a new One
               </button>
             </NavLink>
               }         
-        </div>
+        
         <div className="class-searchBar-wrapper">
         <ClassSearchBar setResults={setResults} uniID={ result.UniID } />
         <ClassSearchResultsList results={results} Uni={result.UniID}/>

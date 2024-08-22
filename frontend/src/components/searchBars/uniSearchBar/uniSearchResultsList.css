@@ -9,6 +9,7 @@
     overflow-y: scroll;
     position: relative;
     z-index: 5;
+    max-width: 1400px;
 }
 
 @media only screen and (max-width: 767px){

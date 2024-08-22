@@ -89,13 +89,13 @@
     border-radius: 7px;
 }
 
-.review-inputs{
+.user-review-inputs{
     margin: 5px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 27vw;
+    width: 100%;
 }
 
 .commentBox{
@@ -107,6 +107,8 @@
     width: 27vw;
     padding-top: 5px;
     padding-left: 5px;
+    z-index: 0;
+    position: relative;
     overflow-y: scroll;
 }
 
@@ -132,8 +134,9 @@
     width: 27vw;
 }
 
-.ratingswrapper{
+.prof-search{
     display: flex;
+    flex-direction: column;
     width: 100%;
 }
 

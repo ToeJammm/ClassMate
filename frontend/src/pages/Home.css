@@ -20,10 +20,7 @@
     align-items: center;
 }
 
-.request-button{
-  z-index: 1;
-  margin-bottom: 15px;
-}
+
 
 body, html {
     margin: 0;
@@ -46,6 +43,24 @@ body, html {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
   }
+
+  .request-button-home{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 21px;
+    padding: 10px;
+    background-color: black;
+    color: white;
+    border-radius: 7px;
+    transition: background-color 0.5s, color 0.5s;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+ 
+
+  .request-button-home:hover {
+    background-color: #f0f0f0;
+    color: black;     
+}
 
   @media only screen and (max-width: 767px){
     .support{

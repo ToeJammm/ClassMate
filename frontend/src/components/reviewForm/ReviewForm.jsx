@@ -3,35 +3,36 @@ import axios from "axios";
 import "./ReviewForm.css";
 import { ProfessorSearchBarClass } from "../searchBars/professorSearchBar/professorSearchBarClass";
 import { ProfessorResultsList } from "../searchBars/professorSearchBar/professorResultsList";
-import { FetchReviews } from "../../API/reviewsAPI";
-import { ProfessorSearchResult } from "../searchBars/professorSearchBar/professorSearchResult";
-// import { TeacherSearBar } from "../searchBars/teacherSearchBar/teacherSearchBar"
-// import { TeacherSearchList } from "../searchBars/teacherSearchBar/teacherSearchList";
+
 const apiUrl = __API_BASE_URL__;
 
 export const ReviewForm = ( { uni, setAlert, classID, setShowGraph, reviews, setReviews} ) => {
    const [professors, setProfessors] = useState([]);
    const [professorID, setProfessorID] = useState(""); //professor ID wansn't getting set unless I did this
    const uniID = uni;
-  useEffect(() => { //gets list of professors
-    const fetchData = async () => {
-      try {
-        const result = await axios.get(`${apiUrl}/uni/${uni}/allprofessors`);
-        const sortedProfessors = result.data.sort((a, b) => {
-          // Compare professors' names alphabetically
-          return a.Name.localeCompare(b.Name);
-        });
-        console.log("sorted professors");
-        console.log(sortedProfessors);
-        setProfessors(sortedProfessors);
-        setProfessorID(sortedProfessors[0].ProfessorID); // initializes ID
-      } catch (error) {
-        console.error("Error fetching professors:", error);
-      }
-    };
+
+
+  // useEffect(() => { //gets list of professors
+  //   const fetchData = async () => {
+  //     try {
+  //       const result = await axios.get(`${apiUrl}/uni/${uni}/allprofessors`);
+  //       const sortedProfessors = result.data.sort((a, b) => {
+  //         // Compare professors' names alphabetically
+  //         return a.Name.localeCompare(b.Name);
+  //       });
+  //       console.log("sorted professors");
+  //       console.log(sortedProfessors);
+  //       setProfessors(sortedProfessors);
+  //       setProfessorID(sortedProfessors[0].ProfessorID); // initializes ID
+  //     } catch (error) {
+  //       console.error("Error fetching professors:", error);
+  //     }
+  //   };
     
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
+
+
 
   const [difficultyValue, setDifficulty] = useState(1);
   const [qualityValue, setquality] = useState(1);
@@ -189,7 +190,7 @@ useEffect(() => {
             </div>
             <h2>Review Form</h2>
           
-            <div className="review-inputs">  
+            <div className="user-review-inputs">  
             <div className="ratingswrapper">
               <div style={{marginRight: '10px'}}>Difficulty*</div>
                <select className="dropdown" onChange={(e) => setDifficulty(e.target.value)}>
@@ -242,8 +243,7 @@ useEffect(() => {
                 ))}
               </select>
             </div>
-            <div className="ratingswrapper">
-              <div style={{marginRight: '13px'}}>Professor</div>
+            <div className="prof-search">
               <ProfessorSearchBarClass setResults={setProfessors} uniID={uniID} setProfessorID={setProfessorID} setProfessorName={setProfessorName} professorName={professorName}/>
               <ProfessorResultsList results={professors} setProfessorID={setProfessorID} setProfessorName={setProfessorName} setResults={setProfessors}/>
             </div>

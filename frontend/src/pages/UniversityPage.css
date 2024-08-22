@@ -8,9 +8,9 @@
 
 .request-button{
     margin-top: 20px;
-    display: flex;
     flex-direction: row;
     justify-content: center;
+    text-decoration: none;
 }
 
 .class-searchBar-wrapper{
